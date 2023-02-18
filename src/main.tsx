@@ -19,20 +19,20 @@ const profileLoader = () =>
 const router        = createBrowserRouter(
   createRoutesFromElements(
     <Route
-      path="/"
+      path="/odin-waldo/"
       element={<App />}
     >
       <Route
-        path="/"
+        path="/odin-waldo/"
         element={<Home />}
       />
       <Route
-        path="/app"
+        path="/odin-waldo/app"
         element={<div />}
       />
       <Route
         loader={profileLoader}
-        path="/profile"
+        path="/odin-waldo/profile"
         element={<Profile />}
       />
     </Route>
