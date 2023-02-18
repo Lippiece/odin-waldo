@@ -12,7 +12,7 @@ import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base : "/odin-shopping-cart/",
+  // base : "/odin-waldo/",
   build: {
     rollupOptions: {
       input: {

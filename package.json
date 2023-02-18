@@ -15,11 +15,13 @@
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@testing-library/user-event": "latest",
+    "firebase": "^9.17.1",
     "ghspa": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
-    "util": "latest"
+    "util": "latest",
+    "vite-plugin-image-optimizer": "^1.0.8"
   },
   "devDependencies": {
     "@testing-library/react": "latest",
