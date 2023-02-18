@@ -11,18 +11,36 @@ import App from "./App";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 
-const root          = ReactDOM.createRoot(document.querySelector("#root") as HTMLElement);
-const profileLoader = () => fetch("https://jsonplaceholder.typicode.com/users");
+const root          = ReactDOM.createRoot(
+  document.querySelector("#root") as HTMLElement
+);
+const profileLoader = () =>
+  fetch("https://jsonplaceholder.typicode.com/users");
 const router        = createBrowserRouter(
   createRoutesFromElements(
-  <Route path="/" element={<App/>}>
-    <Route path="/home" element={<Home/>}/>
-    <Route loader={profileLoader} path="/profile" element={<Profile/>}/>
-  </Route>
-));
+    <Route
+      path="/"
+      element={<App />}
+    >
+      <Route
+        path="/"
+        element={<Home />}
+      />
+      <Route
+        path="/app"
+        element={<div />}
+      />
+      <Route
+        loader={profileLoader}
+        path="/profile"
+        element={<Profile />}
+      />
+    </Route>
+  )
+);
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>
 );
