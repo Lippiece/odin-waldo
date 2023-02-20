@@ -1,10 +1,16 @@
 import "../css/Footer.css";
 
+import { Link, Title1 } from "@fluentui/react-components";
+
 const Footer = () => {
   return (
     <footer>
-      <a href="https://www.theodinproject.com">The Odin Project</a>
-      <a href="https://www.github.com/lippiece">GitHub</a>
+      <Link href="https://www.theodinproject.com">
+        <Title1>The Odin Project</Title1>
+      </Link>
+      <Link href="https://www.github.com/lippiece">
+        <Title1>GitHub</Title1>
+      </Link>
     </footer>
   );
 };

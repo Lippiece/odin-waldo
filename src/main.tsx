@@ -1,21 +1,21 @@
-import { StrictMode } from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from "react"
+import ReactDOM       from "react-dom/client"
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
-} from "react-router-dom";
+}                     from "react-router-dom"
 
-import App from "./App";
-import Home from "./routes/Home";
-import Profile from "./routes/Profile";
+import App     from "./App"
+import Home    from "./routes/Home"
+import Profile from "./routes/Profile"
 
 const root          = ReactDOM.createRoot(
-  document.querySelector("#root") as HTMLElement
-);
+  document.querySelector("body") as HTMLElement
+)
 const profileLoader = () =>
-  fetch("https://jsonplaceholder.typicode.com/users");
+  fetch("https://jsonplaceholder.typicode.com/users")
 const router        = createBrowserRouter(
   createRoutesFromElements(
     <Route

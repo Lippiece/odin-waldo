@@ -1,34 +1,51 @@
+import "../css/Home.css";
+
+import {
+  Body1,
+  Body1Strong,
+  Button,
+  Title1,
+  Title2,
+} from "@fluentui/react-components";
+
 const Home = () => {
   return (
     <>
       <section className="hero">
-        <h1>Welcome to Odin Waldo</h1>
-        <p>Find your favorite characters from a pool of images</p>
-        <button>Start tagging</button>
+        <Title1 as="h1">Welcome to Odin Waldo</Title1>
+        <Title2 as="h2">
+          Find your favorite characters from a pool of images
+        </Title2>
+        <Button>Start tagging</Button>
       </section>
       <section className="about">
-        <h2>About Odin Waldo</h2>
-        <p>
-          Odin Waldo is a photo tagging app that challenges users to
-          find their favorite characters from a pool of images. With
-          our easy-to-use interface, you'll have a blast trying to
-          spot all the characters in our collection.
-        </p>
+        <Title1 as="h1">About Odin Waldo</Title1>
+        <Body1 as="p">
+          Odin Waldo is a photo tagging app that challenges users to find their
+          favorite characters from a pool of images. With our easy-to-use
+          interface, you'll have a blast trying to spot all the characters in
+          our collection.
+        </Body1>
       </section>
       <section className="features">
-        <h2>Features</h2>
+        <Title2 as="h2">Features</Title2>
         <ul>
-          <li>Pool of images to choose from</li>
-          <li>Easy-to-use interface</li>
           <li>
-            Compete with friends and family to find characters the
-            fastest
+            <Body1Strong as="p">Pool of images to choose from</Body1Strong>
+          </li>
+          <li>
+            <Body1Strong as="p">Easy-to-use interface</Body1Strong>
+          </li>
+          <li>
+            <Body1Strong as="p">
+              Compete with friends and family to find characters the fastest
+            </Body1Strong>
           </li>
         </ul>
       </section>
       <section className="call-to-action">
-        <h2>Ready to get started?</h2>
-        <button>Sign up now</button>
+        <Title1 as="h1">Ready to get started?</Title1>
+        <Button>Sign up now</Button>
       </section>
     </>
   );

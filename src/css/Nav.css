@@ -5,8 +5,6 @@ nav {
   justify-content: center;
   margin: 0;
   padding: 0 1rem;
-
-  background-color: #222;
 }
 
 nav > ul {
@@ -19,4 +17,8 @@ nav > ul {
   padding: 0 1rem;
 
   list-style: none;
+}
+
+a {
+  text-decoration: none;
 }

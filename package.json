@@ -14,6 +14,7 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@fluentui/react-components": "^9.15.5",
     "@testing-library/user-event": "latest",
     "firebase": "^9.17.1",
     "ghspa": "latest",
@@ -28,7 +29,6 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
-    "gh-pages": "latest",
     "jsdom": "latest",
     "vite": "latest",
     "vite-plugin-compression": "latest",
