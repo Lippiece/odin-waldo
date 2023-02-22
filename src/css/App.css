@@ -1,14 +1,18 @@
-html, body {
-  height: 100vh;
-}
-
-body > div, main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+html, body, #root {
   height: 100%;
 }
 
+#root > div {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-evenly;
+
   background-image: url("../pattern/darkExa.webp");
 }

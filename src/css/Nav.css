@@ -3,8 +3,7 @@ nav {
   gap: 1em;
   align-items: center;
   justify-content: center;
-  margin: 0;
-  padding: 0 1rem;
+  margin: 1rem;
 }
 
 nav > ul {
@@ -13,7 +12,6 @@ nav > ul {
   align-items: center;
   justify-content: space-between;
   margin: 0;
-
   padding: 0 1rem;
 
   list-style: none;
