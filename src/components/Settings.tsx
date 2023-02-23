@@ -18,7 +18,7 @@ const Settings: FC<{ images: any[] }> = ( { images } ) => {
           key={ name }
           onClick={ () => dispatch(
             { payload: url, type: "set image" } ) }
-          appearance={ context.image === url ? "primary" : "subtle" }
+          appearance={ context?.image === url ? "primary" : "subtle" }
         >
           <img
             alt={ name }
