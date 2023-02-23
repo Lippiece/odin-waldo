@@ -1,28 +1,29 @@
 {
-  "exclude": [
+  "exclude"        : [
     "node_modules",
     "**/node_modules"
   ],
-  "include": [
+  "include"        : [
     "src/**/*"
   ],
   "compilerOptions": {
-    "alwaysStrict": true,
-    "jsx": "react-jsx",
-    "watch": true,
-    "target": "ESNext",
-    "strictFunctionTypes": true,
-    "strict": true,
-    "module": "ESNext",
-    "pretty": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "moduleResolution": "Node",
-    "moduleDetection": "auto",
-    "noImplicitAny": true,
-    "incremental": true,
+    "sourceMap"                   : true,
+    "alwaysStrict"                : true,
+    "jsx"                         : "react-jsx",
+    "watch"                       : true,
+    "target"                      : "ESNext",
+    "strictFunctionTypes"         : true,
+    "strict"                      : true,
+    "module"                      : "ESNext",
+    "pretty"                      : true,
+    "noUnusedParameters"          : true,
+    "noUnusedLocals"              : true,
+    "noImplicitReturns"           : true,
+    "noImplicitThis"              : true,
+    "moduleResolution"            : "Node",
+    "moduleDetection"             : "auto",
+    "noImplicitAny"               : true,
+    "incremental"                 : true,
     "allowSyntheticDefaultImports": true
   }
 }

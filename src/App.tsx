@@ -1,15 +1,16 @@
 // eslint-disable sort-keys-fix/sort-keys-fix
-import "./css/App.css";
+import "./css/App.css"
 
 import {
   BrandVariants,
   createDarkTheme,
   FluentProvider,
-} from "@fluentui/react-components";
-import { Outlet } from "react-router-dom";
+}                 from "@fluentui/react-components"
+import { initializeApp } from "firebase/app"
+import { Outlet } from "react-router-dom"
 
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
+import Footer            from "./components/Footer"
+import Nav               from "./components/Nav"
 
 const customBrandRamp: BrandVariants = {
   10 : "#882c00",
@@ -28,10 +29,17 @@ const customBrandRamp: BrandVariants = {
   70 : "#ff9b71",
   80 : "#ff9b71",
   90 : "#ff9b71",
-};
-
-const theme = createDarkTheme(customBrandRamp)
-const App   = () => {
+}
+window.firebase                      = initializeApp( {
+                                                        apiKey           : "AIzaSyAdFVzk7tS8rsCqVX9rxUBgLjlejMNsoRo",
+                                                        appId            : "1:999810587608:web:3891f2572150f6634270ad",
+                                                        authDomain       : "waldo-693b9.firebaseapp.com",
+                                                        messagingSenderId: "999810587608",
+                                                        projectId        : "waldo-693b9",
+                                                        storageBucket    : "waldo-693b9.appspot.com",
+                                                      } )
+const theme                          = createDarkTheme( customBrandRamp )
+const App                            = () => {
   return (
     <FluentProvider theme={ theme }>
       <Nav/>
@@ -43,4 +51,4 @@ const App   = () => {
   )
 }
 
-export default App;
+export default App

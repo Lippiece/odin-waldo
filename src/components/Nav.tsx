@@ -1,7 +1,7 @@
-import "../css/Nav.css";
+import "../css/Nav.css"
 
-import { Link as FluentLink, Title1 } from "@fluentui/react-components";
-import { Link } from "react-router-dom";
+import { Link as FluentLink, Title1 } from "@fluentui/react-components"
+import { Link }                       from "react-router-dom"
 
 const Nav = () => {
   return (
@@ -22,7 +22,7 @@ const Nav = () => {
         </FluentLink>
       </Link>
     </nav>
-  );
-};
+  )
+}
 
-export default Nav;
+export default Nav

@@ -1,4 +1,4 @@
-import "../css/Home.css";
+import "../css/Home.css"
 
 import {
   Body1,
@@ -6,7 +6,7 @@ import {
   Button,
   Title1,
   Title2,
-} from "@fluentui/react-components";
+} from "@fluentui/react-components"
 
 const Home = () => {
   return (
@@ -48,7 +48,7 @@ const Home = () => {
         <Button>Sign up now</Button>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

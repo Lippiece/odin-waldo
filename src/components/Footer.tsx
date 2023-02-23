@@ -1,6 +1,6 @@
-import "../css/Footer.css";
+import "../css/Footer.css"
 
-import { Link, Title1 } from "@fluentui/react-components";
+import { Link, Title1 } from "@fluentui/react-components"
 
 const Footer = () => {
   return (
@@ -12,7 +12,7 @@ const Footer = () => {
         <Title1>GitHub</Title1>
       </Link>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
