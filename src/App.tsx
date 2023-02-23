@@ -5,12 +5,12 @@ import {
   BrandVariants,
   createDarkTheme,
   FluentProvider,
-}                 from "@fluentui/react-components"
+}                        from "@fluentui/react-components"
 import { initializeApp } from "firebase/app"
-import { Outlet } from "react-router-dom"
+import { Outlet }        from "react-router-dom"
 
-import Footer            from "./components/Footer"
-import Nav               from "./components/Nav"
+import Footer from "./components/Footer"
+import Nav    from "./components/Nav"
 
 const customBrandRamp: BrandVariants = {
   10 : "#882c00",

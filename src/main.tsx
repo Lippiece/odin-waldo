@@ -7,40 +7,40 @@ import {
   RouterProvider,
 }                     from "react-router-dom"
 
-import App     from "./App"
-import Home    from "./routes/Home"
-import Profile from "./routes/Profile"
+import App           from "./App"
+import profileLoader from "./logic/profileLoader"
+import Game          from "./routes/Game"
+import Home          from "./routes/Home"
+import Profile       from "./routes/Profile"
 
-const root          = ReactDOM.createRoot(
-  document.querySelector("body") as HTMLElement
+const root   = ReactDOM.createRoot(
+  document.querySelector( "#root" ) as HTMLElement
 )
-const profileLoader = () =>
-  fetch("https://jsonplaceholder.typicode.com/users")
-const router        = createBrowserRouter(
+const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/odin-waldo/"
-      element={<App />}
+      element={ <App/> }
     >
       <Route
         path="/odin-waldo/"
-        element={<Home />}
+        element={ <Home/> }
       />
       <Route
         path="/odin-waldo/app"
-        element={<div />}
+        element={ <Game/> }
       />
       <Route
-        loader={profileLoader}
+        loader={ profileLoader }
         path="/odin-waldo/profile"
-        element={<Profile />}
+        element={ <Profile/> }
       />
     </Route>
   )
-);
+)
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={ router }/>
   </StrictMode>
-);
+)
