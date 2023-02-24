@@ -1,4 +1,11 @@
-import { createContext, FC, ReactNode, useContext, useReducer } from "react"
+import {
+  createContext,
+  Dispatch,
+  FC,
+  ReactNode,
+  useContext,
+  useReducer,
+} from "react"
 
 interface Action {
   type: string
@@ -19,9 +26,9 @@ const switcher    = {
 const cartReducer = ( state: State, action: Action ) =>
   ( switcher[ action.type ] || switcher.default )( state, action )
 
-const CartContext = createContext<State>( null )
+const CartContext = createContext<State>( undefined )
 
-const CartDispatchContext = createContext( null )
+const CartDispatchContext = createContext<Dispatch<Action>>( undefined )
 
 export const ContextProvider: FC<{ children: ReactNode }>
                = ( { children } ) => {

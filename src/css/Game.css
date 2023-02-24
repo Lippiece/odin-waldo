@@ -1,0 +1,5 @@
+img#selectedImage {
+    width: fit-content;
+    height: fit-content;
+    max-width: fit-content;
+}

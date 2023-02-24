@@ -2,7 +2,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-}                    from "react-router-dom"
+} from "react-router-dom"
 
 import App           from "../App"
 import profileLoader from "../logic/profileLoader"
