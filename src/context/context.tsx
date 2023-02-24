@@ -19,7 +19,7 @@ const switcher    = {
 const cartReducer = ( state: State, action: Action ) =>
   ( switcher[ action.type ] || switcher.default )( state, action )
 
-const CartContext = createContext( null )
+const CartContext = createContext<State>( null )
 
 const CartDispatchContext = createContext( null )
 

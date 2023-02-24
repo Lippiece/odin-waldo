@@ -9,9 +9,8 @@ import {
 import { initializeApp } from "firebase/app"
 import { Outlet }        from "react-router-dom"
 
-import Footer              from "./components/Footer"
-import Nav                 from "./components/Nav"
-import { ContextProvider } from "./context/context"
+import Footer from "./components/Footer"
+import Nav    from "./components/Nav"
 
 const customBrandRamp: BrandVariants = {
   10 : "#882c00",
@@ -43,13 +42,11 @@ const theme                          = createDarkTheme( customBrandRamp )
 const App                            = () => {
   return (
     <FluentProvider theme={ theme }>
-      <ContextProvider>
-        <Nav/>
-        <main>
-          <Outlet/>
-        </main>
-        <Footer/>
-      </ContextProvider>
+      <Nav/>
+      <main>
+        <Outlet/>
+      </main>
+      <Footer/>
     </FluentProvider>
   )
 }
