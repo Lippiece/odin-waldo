@@ -14,21 +14,26 @@ const Game = () => {
 
   return <>
     <Title1>Hello from game</Title1>
-    { context?.image && <>
-      <Title2>Selected image:</Title2>
-      <img
-        alt="selected image"
-        src={ context?.image }
-        id="selectedImage"
-        onClick={ showSelector1 }
-      />
-      {/* { popup.show && <Popup characters={ [] }/> }*/ }
-    </> }
+    { context?.image
+      && <>
+        <Title2>Selected image:</Title2>
+        <img
+          alt="selected image"
+          src={ context?.image }
+          id="selectedImage"
+
+          // onClick={ showSelector1 }
+        />
+        { popup.show && <Popup characters={ [] }/> }
+      </> }
   </>
 }
 
 const Popup = ( { characters } ) => {
-  return <div/>
+  const context = useAppContext()
+  return <div>
+
+  </div>
 }
 
 export default Game

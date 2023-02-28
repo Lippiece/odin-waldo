@@ -19,11 +19,13 @@ const LoginBox = () => {
         <Input
           id="mailInput"
           onInput={ event => setUsername( event.currentTarget.value ) }
+          pattern="[^@]+@[^@]+\.[^@]+"
         />
         <Label htmlFor="passwordInput">Password</Label>
         <Input
           id="passwordInput"
           onInput={ event => setPassword( event.currentTarget.value ) }
+          minLength={ 8 }
         />
         <Button type="submit">Login</Button>
       </form>

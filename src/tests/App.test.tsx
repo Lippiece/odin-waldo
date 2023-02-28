@@ -19,29 +19,40 @@ const images  = [
 ]
 const Profile = () => <Settings images={ images }/>
 
-const Router = () =>
+const withCustomRoutes = ( routes: JSX.Element,
+                           links?: string[] ) => () =>
   <MemoryRouter
-    initialEntries={ [
-      "/odin-waldo/app",
-      "/odin-waldo/profile",
-    ] }
+    initialEntries={ [ links ? links[ links.length - 1 ] : "/" ] }
   >
     <ContextProvider>
-      <Link to="/odin-waldo/app">Play</Link>
+      {
+        links?.map( link => <Link key={ link } to={ link }>{
+          link.split( "/" ).pop()
+        }</Link> )
+      }
       <Routes>
-        <Route path="/odin-waldo/profile" element={ <Profile/> }/>
-        <Route path="/odin-waldo/app" element={ <Game/> }/>
+        { routes }
       </Routes>
     </ContextProvider>
   </MemoryRouter>
 
+const imageSelectionRoutes = (
+  <>
+    <Route path="/odin-waldo/app" element={ <Game/> }/>
+    <Route path="/odin-waldo/profile" element={ <Profile/> }/>
+  </>
+)
+const imageSelectionLinks  = [ "/odin-waldo/app", "/odin-waldo/profile" ]
+const ImageSelection       = withCustomRoutes( imageSelectionRoutes,
+                                               imageSelectionLinks )
+
 describe( "image selection", () => {
   test( "should select and show an image in play menu", async () => {
-    render( <Router/> )
+    render( <ImageSelection/> )
     const user = userEvent.setup()
 
     await user.click( screen.getAllByRole( "button" )[ 0 ] )
-    await user.click( screen.getByText( /play/iu ) )
+    await user.click( screen.getByText( /app/iu ) )
 
     expect( screen.getByText( /selected/iu ) )
   } )
