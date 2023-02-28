@@ -1,6 +1,9 @@
 /* eslint-disable fp/no-unused-expression, fp/no-nil*/
 import { render, screen }                    from "@testing-library/react"
 import userEvent                             from "@testing-library/user-event"
+import {
+  UserEventApi,
+}                                            from "@testing-library/user-event/setup/setup"
 import { Link, MemoryRouter, Route, Routes } from "react-router-dom"
 
 import Settings            from "../components/Settings"
@@ -46,6 +49,13 @@ const imageSelectionLinks  = [ "/odin-waldo/app", "/odin-waldo/profile" ]
 const ImageSelection       = withCustomRoutes( imageSelectionRoutes,
                                                imageSelectionLinks )
 
+const authenticationRoutes = (
+  <Route path="/odin-waldo/profile" element={ <Profile/> }/>
+)
+const authenticationLinks  = [ "/odin-waldo/profile" ]
+const Authentication       = withCustomRoutes( authenticationRoutes,
+                                               authenticationLinks )
+
 describe( "image selection", () => {
   test( "should select and show an image in play menu", async () => {
     render( <ImageSelection/> )
@@ -55,5 +65,37 @@ describe( "image selection", () => {
     await user.click( screen.getByText( /app/iu ) )
 
     expect( screen.getByText( /selected/iu ) )
+  } )
+} )
+
+describe( "authentication", () => {
+  test( "should greet anonymous user", () => {
+    render( <Authentication/> )
+    expect( screen.getByText( /anonymous/iu ) )
+  } )
+
+  const login = async ( user: UserEventApi ) => {
+    await user.click( screen.getByText( /login/iu ) )
+    await user.type( screen.getByLabelText( /e-mail/iu ), "email@org.com" )
+    await user.type( screen.getByLabelText( /password/iu ), "password" )
+    await user.click( screen.getByRole( "button" ) )
+  }
+
+  test( "should greet authenticated user", async () => {
+    render( <Authentication/> )
+    const user = userEvent.setup()
+
+    await login( user )
+
+    expect( screen.getByText( /hi/iu ) )
+  } )
+
+  test( "should show stats for authenticated user", async () => {
+    render( <Authentication/> )
+    const user = userEvent.setup()
+
+    await login( user )
+
+    expect( screen.getByText( /stat/iu ) )
   } )
 } )
