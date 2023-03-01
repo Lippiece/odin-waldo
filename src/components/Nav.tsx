@@ -3,6 +3,8 @@ import "../css/Nav.css"
 import { Link as FluentLink, Title1 } from "@fluentui/react-components"
 import { Link }                       from "react-router-dom"
 
+import UserBox from "./UserBox"
+
 const Nav = () => {
   return (
     <nav>
@@ -21,6 +23,7 @@ const Nav = () => {
           <Title1 as="h1">Profile</Title1>
         </FluentLink>
       </Link>
+      <UserBox/>
     </nav>
   )
 }

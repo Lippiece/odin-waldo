@@ -1,14 +1,17 @@
 /* eslint-disable fp/no-unused-expression, fp/no-nil*/
-import { render, screen }                    from "@testing-library/react"
-import userEvent                             from "@testing-library/user-event"
-import {
-  UserEventApi,
-}                                            from "@testing-library/user-event/setup/setup"
-import { Link, MemoryRouter, Route, Routes } from "react-router-dom"
+/* eslint-disable react/forbid-elements */
+import { render, screen }              from "@testing-library/react"
+import userEvent                       from "@testing-library/user-event"
+import { MemoryRouter, Route, Routes } from "react-router-dom"
 
-import Settings            from "../components/Settings"
-import { ContextProvider } from "../context/context"
-import Game                from "../routes/Game"
+import Nav      from "../components/Nav"
+import Settings from "../components/Settings"
+import {
+  ContextProvider,
+  useAppContext,
+  useAppDispatch,
+}               from "../context/context"
+import Game     from "../routes/Game"
 
 const images  = [
   {
@@ -28,11 +31,7 @@ const withCustomRoutes = ( routes: JSX.Element,
     initialEntries={ [ links ? links[ links.length - 1 ] : "/" ] }
   >
     <ContextProvider>
-      {
-        links?.map( link => <Link key={ link } to={ link }>{
-          link.split( "/" ).pop()
-        }</Link> )
-      }
+      <Nav/>
       <Routes>
         { routes }
       </Routes>
@@ -62,7 +61,7 @@ describe( "image selection", () => {
     const user = userEvent.setup()
 
     await user.click( screen.getAllByRole( "button" )[ 0 ] )
-    await user.click( screen.getByText( /app/iu ) )
+    await user.click( screen.getByText( /play/iu ) )
 
     expect( screen.getByText( /selected/iu ) )
   } )
@@ -74,18 +73,37 @@ describe( "authentication", () => {
     expect( screen.getByText( /anonymous/iu ) )
   } )
 
-  const login = async ( user: UserEventApi ) => {
-    await user.click( screen.getByText( /login/iu ) )
-    await user.type( screen.getByLabelText( /e-mail/iu ), "email@org.com" )
-    await user.type( screen.getByLabelText( /password/iu ), "password" )
-    await user.click( screen.getByRole( "button" ) )
-  }
+  vi.mock( "../components/UserBox.tsx", () => ( {
+    default: () => {
+      const { user }        = useAppContext()
+      const dispatch        = useAppDispatch()
+      const userOrAnonymous = user?.email || "Anonymous"
+
+      return <section>
+        <p>{ `Hi, ${ userOrAnonymous }` }</p>
+        !user && <form
+        onSubmit={ event => {
+          event.preventDefault()
+          dispatch( {
+                      payload: {
+                        email   : "email@email.email",
+                        password: "password",
+                      },
+                      type: "update user",
+                    } )
+        } }
+      >
+        <button type="submit">Sign in</button>
+      </form>
+      </section>
+    },
+  } ) )
 
   test( "should greet authenticated user", async () => {
     render( <Authentication/> )
     const user = userEvent.setup()
 
-    await login( user )
+    await user.click( screen.getByText( /sign/iu ) )
 
     expect( screen.getByText( /hi/iu ) )
   } )
@@ -94,7 +112,7 @@ describe( "authentication", () => {
     render( <Authentication/> )
     const user = userEvent.setup()
 
-    await login( user )
+    await user.click( screen.getByText( /sign/iu ) )
 
     expect( screen.getByText( /stat/iu ) )
   } )

@@ -14,6 +14,10 @@ interface Action {
 
 interface State {
   image: string
+  user: {
+    email: string
+    password: string
+  }
 }
 
 const switcher    = {
@@ -21,6 +25,10 @@ const switcher    = {
   "set image": ( state: State, { payload } ) => ( {
     ...state,
     image: payload,
+  } ),
+  "update user": ( state: State, { payload } ) => ( {
+    ...state,
+    user: payload,
   } ),
 }
 const cartReducer = ( state: State, action: Action ) =>
