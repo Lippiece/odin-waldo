@@ -26,9 +26,9 @@ const images  = [
 const Profile = () => <Settings images={ images }/>
 
 const withCustomRoutes = ( routes: JSX.Element,
-                           links?: string[] ) => () =>
+                           links: string[] ) => () =>
   <MemoryRouter
-    initialEntries={ [ links ? links[ links.length - 1 ] : "/" ] }
+    initialEntries={ [ links[ links.length - 1 ] ] }
   >
     <ContextProvider>
       <Nav/>
@@ -81,20 +81,21 @@ describe( "authentication", () => {
 
       return <section>
         <p>{ `Hi, ${ userOrAnonymous }` }</p>
-        !user && <form
-        onSubmit={ event => {
-          event.preventDefault()
-          dispatch( {
-                      payload: {
-                        email   : "email@email.email",
-                        password: "password",
-                      },
-                      type: "update user",
-                    } )
-        } }
-      >
-        <button type="submit">Sign in</button>
-      </form>
+        <form
+          onSubmit={ event => {
+            event.preventDefault()
+            dispatch( {
+                        payload: {
+                          email   : "email@email.email",
+                          password: "password",
+                        },
+                        type: "update user",
+                      } )
+          } }
+          hidden={ Boolean( user ) }
+        >
+          <button type="submit">Sign in</button>
+        </form>
       </section>
     },
   } ) )
@@ -112,8 +113,10 @@ describe( "authentication", () => {
     render( <Authentication/> )
     const user = userEvent.setup()
 
+    expect( screen.queryByText( /stat/iu ) ).toBeNull()
+
     await user.click( screen.getByText( /sign/iu ) )
 
-    expect( screen.getByText( /stat/iu ) )
+    expect( screen.findByText( /stat/iu ) )
   } )
 } )
