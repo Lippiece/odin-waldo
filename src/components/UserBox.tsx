@@ -1,30 +1,19 @@
-import {
-  Button,
-  Dialog,
-  DialogSurface,
-  DialogTitle,
-  DialogTrigger,
-  Persona,
-} from "@fluentui/react-components"
+import {Persona} from "@fluentui/react-components"
+import {useEffect, useState} from "react";
 
-import { useAppContext } from "../context/context"
-import LoginBox          from "./LoginBox"
+import {useAppContext} from "../context/context"
+import LoginBox from "./LoginBox"
 
 const UserBox = () => {
-  const { user }        = useAppContext()
-  const userOrAnonymous = user?.email || "Anonymous"
+  const {user} = useAppContext()
+  const [ loggedIn, setLoggedIn ] = useState(false)
+  useEffect(() => {
+    user ? setLoggedIn(true) : setLoggedIn(false)
+  }, [ user ])
 
   return <section>
-    <Persona primaryText={ `Hi, ${ userOrAnonymous }` }/>
-    !user && <Dialog>
-    <DialogTrigger>
-      <Button>Sign in</Button>
-    </DialogTrigger>
-    <DialogSurface>
-      <DialogTitle>Sign in</DialogTitle>
-      <LoginBox/>
-    </DialogSurface>
-  </Dialog>
+    <Persona primaryText={`Hi, ${loggedIn ? user : "Anonymous"}`}/>
+    {!loggedIn && <LoginBox/>}
   </section>
 }
 

@@ -1,11 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  FC,
-  ReactNode,
-  useContext,
-  useReducer,
-} from "react"
+import {createContext, Dispatch, FC, ReactNode, useContext, useReducer} from "react"
 
 interface Action {
   type: string
@@ -14,45 +7,43 @@ interface Action {
 
 interface State {
   image: string
-  user: {
-    email: string
-    password: string
-  }
+  user: string
 }
 
-const switcher    = {
-  default    : () => console.error( "Unhandled action type" ),
-  "set image": ( state: State, { payload } ) => ( {
+const switcher = {
+  default    : () => console.error("Unhandled action type"),
+  "set image": (state: State, {payload}) => ({
     ...state,
     image: payload,
-  } ),
-  "update user": ( state: State, { payload } ) => ( {
+  }),
+  "set user": (state: State, {payload}) => ({
     ...state,
     user: payload,
-  } ),
+  }),
 }
-const cartReducer = ( state: State, action: Action ) =>
-  ( switcher[ action.type ] || switcher.default )( state, action )
+const cartReducer = (state: State, action: Action) =>
+  (switcher[ action.type ] || switcher.default)(state, action)
 
-const CartContext = createContext<State>( undefined )
+const CartContext = createContext<State>(undefined)
 
-const CartDispatchContext = createContext<Dispatch<Action>>( undefined )
+const CartDispatchContext = createContext<Dispatch<Action>>(undefined)
 
 export const ContextProvider: FC<{ children: ReactNode }>
-               = ( { children } ) => {
+  = ({children}) => {
   const [ state, dispatch ]
-          = useReducer( cartReducer, {
+    = useReducer(cartReducer, {
     image: "",
-  } )
+    user : "",
+  })
 
   return (
-    <CartContext.Provider value={ state }>
-      <CartDispatchContext.Provider value={ dispatch }>
-        { children }
+    <CartContext.Provider value={state}>
+      <CartDispatchContext.Provider value={dispatch}>
+        {children}
       </CartDispatchContext.Provider>
     </CartContext.Provider>
   )
 }
 
-export const useAppContext  = () => useContext( CartContext )
-export const useAppDispatch = () => useContext( CartDispatchContext )
+export const useAppContext = () => useContext(CartContext)
+export const useAppDispatch = () => useContext(CartDispatchContext)

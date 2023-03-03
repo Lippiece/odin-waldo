@@ -1,14 +1,17 @@
-import { useLoaderData } from "react-router-dom"
+import {useLoaderData} from "react-router-dom"
 
-import Settings          from "../components/Settings"
-import { useAppContext } from "../context/context"
+import Settings from "../components/Settings"
+import {useAppContext} from "../context/context"
 
 const Stats = () => {
-  const { user } = useAppContext()
+  const {user} = useAppContext()
 
-  return <section hidden={ !user }>
-    <h2>Stats</h2>
-  </section>
+  return <>
+    {user && <section>
+      <h2>Stats</h2>
+    </section>
+    }
+  </>
 }
 
 const Profile = () => {
@@ -16,7 +19,7 @@ const Profile = () => {
   return (
     <>
       <h1>Hello from Profile</h1>
-      <Settings images={ images }/>
+      <Settings images={images}/>
       <Stats/>
     </>
   )
