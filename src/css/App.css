@@ -1,18 +1,17 @@
-html, body, #root {
-    height: 100%;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 4 | @import "@blueprintjs/core/lib/scss/variables.scss";
+ *   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   App.scss 4:9  root stylesheet */
 
-#root > div {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-evenly;
-
-    background-image: url("../pattern/darkExa.webp");
+body::before {
+  font-family   : "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+  "Droid Sans Mono", monospace, monospace;
+  display       : block;
+  margin-bottom : 1em;
+  padding       : 1em;
+  content       : "Error: Can't find stylesheet to import.\a   \2577 \a 4 \2502  @import \"@blueprintjs/core/lib/scss/variables.scss\";\a   \2502          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   App.scss 4:9  root stylesheet";
+  white-space   : pre;
+  border-bottom : 2px solid black;
 }

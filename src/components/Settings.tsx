@@ -1,7 +1,7 @@
 import "../css/Pregame.css"
 
-import { Button, Title1 } from "@fluentui/react-components"
-import { FC }             from "react"
+import { Button } from "@blueprintjs/core"
+import { FC }     from "react"
 
 import { useAppContext, useAppDispatch } from "../context/context"
 
@@ -11,7 +11,7 @@ const Settings: FC<{ images: any[] }> = ( { images } ) => {
   const dispatch = useAppDispatch()
 
   return <section className="image-pool">
-    <Title1>Choose your destiny</Title1>
+    <h1>Choose your destiny</h1>
     { images?.map( ( { name, url } ) => (
       <Button
         key={ name }

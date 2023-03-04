@@ -1,20 +1,22 @@
-import {Persona} from "@fluentui/react-components"
-import {useEffect, useState} from "react";
+import { Navbar }              from "@blueprintjs/core"
+import { useEffect, useState } from "react"
 
-import {useAppContext} from "../context/context"
-import LoginBox from "./LoginBox"
+import { useAppContext } from "../context/context"
+import LoginBox          from "./LoginBox"
 
 const UserBox = () => {
-  const {user} = useAppContext()
-  const [ loggedIn, setLoggedIn ] = useState(false)
-  useEffect(() => {
-    user ? setLoggedIn(true) : setLoggedIn(false)
-  }, [ user ])
+  const { user }                  = useAppContext()
+  const [ loggedIn, setLoggedIn ] = useState( false )
+  useEffect( () => {
+    user ? setLoggedIn( true ) : setLoggedIn( false )
+  }, [ user ] )
 
-  return <section>
-    <Persona primaryText={`Hi, ${loggedIn ? user : "Anonymous"}`}/>
-    {!loggedIn && <LoginBox/>}
-  </section>
+  return <>
+    <Navbar.Heading>{ `Hi, ${ loggedIn ?
+                              user :
+                              "Anonymous" }` }</Navbar.Heading>
+    { !loggedIn && <LoginBox/> }
+  </>
 }
 
 export default UserBox

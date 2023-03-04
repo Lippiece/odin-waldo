@@ -1,39 +1,30 @@
 import "../css/Game.css"
 
-import { Title1, Title2 } from "@fluentui/react-components"
-import { useState }       from "react"
-
 import { useAppContext } from "../context/context"
 
 const Game = () => {
-  const context             = useAppContext()
-  const [ popup, setPopup ] = useState( {
-                                          coordinates: [ 0, 0 ],
-                                          show       : false,
-                                        } )
+  const context = useAppContext()
 
   return <>
-    <Title1>Hello from game</Title1>
+    <h1>Hello from game</h1>
     { context?.image
       && <>
-        <Title2>Selected image:</Title2>
-        <img
-          alt="selected image"
-          src={ context?.image }
-          id="selectedImage"
+        <h2>Selected image:</h2>
+        {/* <Popover> */ }
+        {/*   <PopoverTrigger> */ }
+        {/*     <img */ }
+        {/*       alt="Selected image from the Profile" */ }
+        {/*       src={ context?.image } */ }
+        {/*       id="selectedImage" */ }
+        {/*     /> */ }
+        {/*   </PopoverTrigger> */ }
 
-          // onClick={ showSelector1 }
-        />
-        { popup.show && <Popup characters={ [] }/> }
+        {/*   <PopoverSurface> */ }
+        {/*     <List */ }
+        {/*   </PopoverSurface> */ }
+        {/* </Popover> */ }
       </> }
   </>
-}
-
-const Popup = ( { characters } ) => {
-  const context = useAppContext()
-  return <div>
-
-  </div>
 }
 
 export default Game

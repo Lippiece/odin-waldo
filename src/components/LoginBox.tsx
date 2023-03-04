@@ -2,80 +2,76 @@ import {
   Button,
   Dialog,
   DialogBody,
-  DialogSurface,
-  DialogTitle,
-  DialogTrigger,
-  Input,
+  InputGroup,
   Label,
-} from "@fluentui/react-components"
-import {useState} from "react"
+}                                from "@blueprintjs/core"
+import { useCallback, useState } from "react"
 
-import {useAppDispatch} from "../context/context"
-import signIn from "../logic/signIn";
+import { useAppDispatch } from "../context/context"
+import signIn             from "../logic/signIn"
 
 const LoginBox = () => {
-  const [ username, setUsername ] = useState("")
-  const [ password, setPassword ] = useState("")
-  const [ status, setStatus ] = useState("")
-  const dispatch = useAppDispatch()
+  const [ username, setUsername ] = useState( "" )
+  const [ password, setPassword ] = useState( "" )
+  const [ status, setStatus ]     = useState( "" )
+  const [ isOpen, setIsOpen ]     = useState( false )
+  const handleButtonClick         = useCallback( () => setIsOpen( !isOpen ),
+                                                 [] )
+  const handleClose               = useCallback( () => setIsOpen( false ),
+                                                 [] )
 
-  /* useEffect(() => {
-       setStatus("")
-     }, [username, password]) */
+  const dispatch = useAppDispatch()
   return (
-    <Dialog>
-      <DialogTrigger>
-        <Button>Sign in</Button>
-      </DialogTrigger>
-      <DialogSurface>
-        <DialogTitle>Sign in</DialogTitle>
+    <>
+      <Button onClick={ handleButtonClick } text="Sign in"/>
+      <Dialog isOpen={ isOpen } onClose={ handleClose }>
         <DialogBody>
           <form
-            onSubmit={async event => {
+            onSubmit={ async event => {
               event.preventDefault()
-              setStatus("Signing in")
-              const result = await signIn(username, password)
-              if (result?.message) {
-                return setStatus(result.message)
+              setStatus( "Signing in" )
+              const result = await signIn( username, password )
+              if ( result?.message ) {
+                return setStatus( result.message )
               }
-              setStatus("Writing credentials")
-              dispatch({payload: result, type: "set user"})
-              setStatus("Signed in")
-            }}
+              setStatus( "Writing credentials" )
+              dispatch( { payload: result, type: "set user" } )
+              setStatus( "Signed in" )
+            } }
           >
-            <p>{status}</p>
+            <p>{ status }</p>
             <Label htmlFor="mailInput">E-Mail</Label>
-            <Input
+            <InputGroup
               id="mailInput"
-              onInput={event => {
-                setUsername(event.currentTarget.value);
+              onInput={ event => {
+                setUsername( event.currentTarget.value )
                 event.target.checkValidity()
-                  ? setStatus("")
-                  : setStatus(event.target.validationMessage)
-              }}
+                ? setStatus( "" )
+                : setStatus( event.target.validationMessage )
+              } }
               pattern="[^@]+@[^@]+\.[^@]+"
-              minLength={10}
+              minLength={ 10 }
               required
+              placeholder="mail@domain.com"
             />
             <Label htmlFor="passwordInput">Password</Label>
-            <Input
+            <InputGroup
               id="passwordInput"
-              onInput={event => {
-                setPassword(event.currentTarget.value);
+              onInput={ event => {
+                setPassword( event.currentTarget.value )
                 event.target.checkValidity()
-                  ? setStatus("")
-                  : setStatus(event.target.validationMessage)
-              }}
+                ? setStatus( "" )
+                : setStatus( event.target.validationMessage )
+              } }
               type="password"
-              minLength={8}
+              minLength={ 8 }
               required
             />
             <Button type="submit">Login</Button>
           </form>
         </DialogBody>
-      </DialogSurface>
-    </Dialog>
-
+      </Dialog>
+    </>
   )
 }
 
