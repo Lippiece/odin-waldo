@@ -20,35 +20,39 @@ const LoginBox = () => {
   const handleClose               = useCallback( () => setIsOpen( false ),
                                                  [] )
 
-  const dispatch = useAppDispatch()
+  const dispatch                             = useAppDispatch()
+  const onSubmit: ( event ) => Promise<void> = async event => {
+    event.preventDefault()
+    setStatus( "Signing in" )
+    const result = await signIn( username, password )
+    if ( result?.message ) {
+      return setStatus( result.message )
+    }
+    setStatus( "Writing credentials" )
+    dispatch( { payload: result, type: "set user" } )
+    setStatus( "Signed in" )
+  }
+  const onInput: ( event ) => void           = event => {
+    event.target.type === "password"
+    ? setPassword( event.currentTarget.value )
+    : setUsername( event.currentTarget.value )
+    event.target.checkValidity()
+    ? setStatus( "" )
+    : setStatus( event.target.validationMessage )
+  }
   return (
     <>
       <Button onClick={ handleButtonClick } text="Sign in"/>
       <Dialog isOpen={ isOpen } onClose={ handleClose }>
         <DialogBody>
           <form
-            onSubmit={ async event => {
-              event.preventDefault()
-              setStatus( "Signing in" )
-              const result = await signIn( username, password )
-              if ( result?.message ) {
-                return setStatus( result.message )
-              }
-              setStatus( "Writing credentials" )
-              dispatch( { payload: result, type: "set user" } )
-              setStatus( "Signed in" )
-            } }
+            onSubmit={ onSubmit }
           >
             <p>{ status }</p>
             <Label htmlFor="mailInput">E-Mail</Label>
             <InputGroup
               id="mailInput"
-              onInput={ event => {
-                setUsername( event.currentTarget.value )
-                event.target.checkValidity()
-                ? setStatus( "" )
-                : setStatus( event.target.validationMessage )
-              } }
+              onInput={ onInput }
               pattern="[^@]+@[^@]+\.[^@]+"
               minLength={ 10 }
               required
@@ -57,14 +61,9 @@ const LoginBox = () => {
             <Label htmlFor="passwordInput">Password</Label>
             <InputGroup
               id="passwordInput"
-              onInput={ event => {
-                setPassword( event.currentTarget.value )
-                event.target.checkValidity()
-                ? setStatus( "" )
-                : setStatus( event.target.validationMessage )
-              } }
+              onInput={ onInput }
               type="password"
-              minLength={ 8 }
+              minLength={ 6 }
               required
             />
             <Button type="submit">Login</Button>
