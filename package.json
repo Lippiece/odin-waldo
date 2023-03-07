@@ -12,7 +12,8 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies"   : {
-    "@blueprintjs/core"          : "^4.17.4",
+    "@blueprintjs/core"          : "latest",
+    "@blueprintjs/popover2"      : "latest",
     "@emotion/react"             : "latest",
     "@emotion/styled"            : "latest",
     "@testing-library/user-event": "latest",
@@ -31,7 +32,7 @@
     "@vitejs/plugin-react"   : "latest",
     "@vitest/coverage-c8"    : "latest",
     "jsdom"                  : "latest",
-    "sass"                   : "^1.58.3",
+    "sass"                   : "latest",
     "vite"                   : "latest",
     "vite-plugin-compression": "latest",
     "vitest"                 : "latest"

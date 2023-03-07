@@ -12,8 +12,8 @@ const image = {
     odin : [ "30", "30" ],
     waldo: [ "15", "15" ],
   },
-  name: "waldo",
-  url : "https://i.imgur.com/9YQ9qX1.png",
+  name      : "waldo",
+  url       : "https://i.imgur.com/9YQ9qX1.png",
 }
 
 const Profile = () => <Settings images={ [ image ] }/>
@@ -35,7 +35,17 @@ const Router = () =>
   </MemoryRouter>
 
 describe( "clicking the image", () => {
-  test( "should display the characters near the clicking area", async () => {
+  test( "should display the coordinates clicked", async () => {
+    render( <Router/> )
+    const user = userEvent.setup()
+
+    await user.click( screen.getAllByRole( "button" )[ 0 ] )
+    await user.click( screen.getByText( /play/iu ) )
+    await user.click( screen.getByAltText( /selected/iu ) )
+
+    expect( screen.getByText( /clicked/iu ) )
+  } )
+  test( "should display the characters found", async () => {
     render( <Router/> )
     const user = userEvent.setup()
 
