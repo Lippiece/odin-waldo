@@ -4,6 +4,7 @@ import { Button } from "@blueprintjs/core"
 import { FC }     from "react"
 
 import { useAppContext, useAppDispatch } from "../context/context"
+import getCharacters                     from "../logic/getCharacters"
 
 const Settings: FC<{ images: any[] }> = ( { images } ) => {
 
@@ -15,8 +16,13 @@ const Settings: FC<{ images: any[] }> = ( { images } ) => {
     { images?.map( ( { name, url } ) => (
       <Button
         key={ name }
-        onClick={ () => dispatch(
-          { payload: url, type: "set image" } ) }
+        onClick={ async () => {
+          dispatch(
+            { payload: url, type: "set image" } )
+
+          const characters = await getCharacters( context?.image )
+          dispatch( { payload: characters, type: "set characters" } )
+        } }
         appearance={ context?.image === url ? "primary" : "subtle" }
       >
         <img

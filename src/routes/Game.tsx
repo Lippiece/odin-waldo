@@ -3,12 +3,14 @@ import "../css/Game.css"
 import { Menu, MenuItem } from "@blueprintjs/core"
 import { useState }       from "react"
 
-import { useAppContext } from "../context/context"
+import { useAppContext, useAppDispatch } from "../context/context"
 
 const Game = () => {
   const context                         = useAppContext()
+  const dispatch                        = useAppDispatch()
   const [ isOpen, setIsOpen ]           = useState( false )
   const [ coordinates, setCoordinates ] = useState( [ 0, 0 ] )
+  const [ characters, setCharacters ]   = useState( [] )
   const joinedCoordinates               = coordinates.join( ", " )
 
   const Popup = () => (
@@ -20,15 +22,19 @@ const Game = () => {
           top     : `${ coordinates[ 1 ] }px`,
         } }
       >
-        <MenuItem icon="select" text="Select all"/>
         <MenuItem
           icon="select"
           text={ `Clicked coordinates: ${ joinedCoordinates }` }
         />
+        { context?.characters?.map( ( character, index ) => (
+          <MenuItem
+            icon="person"
+            key={ index }
+            text={ character }
+          />
+        ) ) }
       </Menu> }
     </> )
-
-  const handleInteraction = state => setIsOpen( state )
 
   return <>
     <h1>Hello from game</h1>

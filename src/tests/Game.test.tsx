@@ -45,6 +45,11 @@ describe( "clicking the image", () => {
 
     expect( screen.getByText( /clicked/iu ) )
   } )
+
+  vi.mock( "../logic/getCharacters.ts", () => ( {
+    default: async () => ( [ "odin", "waldo" ] ),
+  } ) )
+
   test( "should display the characters found", async () => {
     render( <Router/> )
     const user = userEvent.setup()
