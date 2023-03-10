@@ -1,16 +1,16 @@
 name: Deploy
 
-on:
+on  :
   push:
     branches:
       - main
 
 jobs:
-  build:
-    name: Build
+  build :
+    name   : Build
     runs-on: ubuntu-latest
 
-    steps:
+    steps  :
       - name: Checkout repo
         uses: actions/checkout@v2
 
@@ -21,10 +21,10 @@ jobs:
           check-latest: true
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        uses: bahmutov/npm-install@v1.6.0
 
       - name: Build project
-        run: npm run build
+        run : npm run build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
@@ -33,12 +33,12 @@ jobs:
           path: ./dist
 
   deploy:
-    name: Deploy
-    needs: build
+    name   : Deploy
+    needs  : build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if     : github.ref == 'refs/heads/main'
 
-    steps:
+    steps  :
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
@@ -49,4 +49,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir : ./dist
