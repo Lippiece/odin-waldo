@@ -21,7 +21,10 @@ const Settings: FC<{ images: any[] }> = ( { images } ) => {
             { payload: url, type: "set image" } )
 
           const characters = await getCharacters( context?.image )
-          dispatch( { payload: characters, type: "set characters" } )
+          dispatch( {
+                      payload: Object.keys( characters ),
+                      type   : "set characters",
+                    } )
         } }
         appearance={ context?.image === url ? "primary" : "subtle" }
       >
