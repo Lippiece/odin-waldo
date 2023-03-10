@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: latest
           check-latest: true
+          
+      - name: Update lock
+        run: npm install
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1.6.0
