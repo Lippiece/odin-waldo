@@ -20,9 +20,9 @@ const Settings: FC<{ images: any[] }> = ( { images } ) => {
           dispatch(
             { payload: url, type: "set image" } )
 
-          const characters = await getCharacters( context?.image )
+          const characters = await getCharacters( url )
           dispatch( {
-                      payload: Object.keys( characters ),
+                      payload: characters,
                       type   : "set characters",
                     } )
         } }

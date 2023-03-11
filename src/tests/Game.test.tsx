@@ -1,6 +1,10 @@
 /* eslint-disable fp/no-unused-expression, fp/no-nil*/
-import { render, screen }                    from "@testing-library/react"
+import { render, screen, waitFor }           from "@testing-library/react"
 import userEvent                             from "@testing-library/user-event"
+import {
+  setupSub,
+  UserEvent,
+}                                            from "@testing-library/user-event/setup/setup"
 import { Link, MemoryRouter, Route, Routes } from "react-router-dom"
 
 import Settings            from "../components/Settings"
@@ -35,29 +39,47 @@ const Router = () =>
   </MemoryRouter>
 
 describe( "clicking the image", () => {
+  async function selectImage( user: {
+    readonly setup: ( ...args: Parameters<typeof setupSub> ) => UserEvent
+  } ): Promise<void> {
+    await user.click( screen.getAllByRole( "button" )[ 0 ] )
+    await user.click( screen.getByText( /play/iu ) )
+    await user.click( screen.getByAltText( /selected/iu ) )
+  }
+
   test( "should display the coordinates clicked", async () => {
     render( <Router/> )
     const user = userEvent.setup()
 
-    await user.click( screen.getAllByRole( "button" )[ 0 ] )
-    await user.click( screen.getByText( /play/iu ) )
-    await user.click( screen.getByAltText( /selected/iu ) )
+    await selectImage( user )
 
     expect( screen.getByText( /clicked/iu ) )
   } )
 
   vi.mock( "../logic/getCharacters.ts", () => ( {
-    default: async () => ( [ "odin", "waldo" ] ),
+    default: async () => image.characters,
   } ) )
 
   test( "should display the characters found", async () => {
     render( <Router/> )
     const user = userEvent.setup()
 
-    await user.click( screen.getAllByRole( "button" )[ 0 ] )
-    await user.click( screen.getByText( /play/iu ) )
-    await user.click( screen.getByAltText( /selected/iu ) )
+    await selectImage( user )
 
     expect( screen.getByText( /odin/iu ) )
+  } )
+
+  test( "should react on character click", async () => {
+    render( <Router/> )
+    const user = userEvent.setup()
+
+    await selectImage( user )
+
+    await user.click( screen.getByText( /odin/iu ) )
+
+    await waitFor(
+      () => expect( screen.getByText( /odin/iu ).textContent ).toContain(
+        "✔" )
+    )
   } )
 } )

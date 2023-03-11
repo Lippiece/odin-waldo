@@ -15,7 +15,9 @@ interface Action {
 interface State {
   image?: string
   user?: string
-  characters?: string[]
+  characters?: {
+    [ key: string ]: [ number, number ]
+  }
 }
 
 const switcher    = {
