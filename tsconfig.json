@@ -5,9 +5,9 @@
   ],
   "include"        : [
     "src/**/*",
-    "tests/**/*",
     "src/tests/*",
-    "src/tests/**/*.tsx"
+    "src/tests/**/*.tsx",
+    "src/tests/**/*.ts"
   ],
   "typeAcquisition": {
     "enable" : true,

@@ -14,8 +14,20 @@ const Stats = () => {
   </>
 }
 
+type ImageAttributes = { name: string, url: string }[]
+
 const Profile = () => {
-  const images = useLoaderData()
+  const imagesAttributes: ImageAttributes = useLoaderData()
+  const images                            = imagesAttributes.map( ( {
+                                                                      url,
+                                                                      name,
+                                                                    } ) => {
+                                                                    const image = new Image()
+                                                                    image.src   = url
+                                                                    image.alt   = name
+                                                                    return image
+                                                                  }
+  )
   return (
     <>
       <h1>Hello from Profile</h1>

@@ -1,0 +1,18 @@
+img {
+  max-width: 300px;
+}
+
+section.image-pool {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  justify-content: center;
+  gap: 10rem;
+
+  & img {
+    width: 80vw;
+  }
+
+}
+

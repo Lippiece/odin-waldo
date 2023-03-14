@@ -2,12 +2,12 @@
 import { render, screen, waitFor }           from "@testing-library/react"
 import userEvent                             from "@testing-library/user-event"
 import {
-  setupSub,
   UserEvent,
 }                                            from "@testing-library/user-event/setup/setup"
 import { Link, MemoryRouter, Route, Routes } from "react-router-dom"
 
 import Settings            from "../components/Settings"
+import Timer               from "../components/Timer"
 import { ContextProvider } from "../context/context"
 import Game                from "../routes/Game"
 
@@ -22,7 +22,9 @@ const image = {
 
 const Profile = () => <Settings images={ [ image ] }/>
 
-const Router = () =>
+const Router = (
+  { additionalComponents = null }: { additionalComponents?: JSX.Element } = {}
+) =>
   <MemoryRouter
     initialEntries={ [
       "/odin-waldo/app",
@@ -30,6 +32,9 @@ const Router = () =>
     ] }
   >
     <ContextProvider>
+      {/* <Nav/> */ }
+      { additionalComponents }
+      <div>MOTHERFUCKER</div>
       <Link to="/odin-waldo/app">Play</Link>
       <Routes>
         <Route path="/odin-waldo/profile" element={ <Profile/> }/>
@@ -38,48 +43,98 @@ const Router = () =>
     </ContextProvider>
   </MemoryRouter>
 
-describe( "clicking the image", () => {
-  async function selectImage( user: {
-    readonly setup: ( ...args: Parameters<typeof setupSub> ) => UserEvent
-  } ): Promise<void> {
+const selectImage = async ( user: UserEvent ): Promise<void> => {
+  await user.click( screen.getAllByRole( "button" )[ 0 ] )
+  await user.click( screen.getByText( /play/iu ) )
+  expect( await screen.findByRole( "img" ) )
+  await user.click( screen.getByRole( "img" ) )
+}
+
+describe( "game process", () => {
+  test( "should display the selected image", async () => {
+    render( <Router/> )
+    const user = userEvent.setup()
+
     await user.click( screen.getAllByRole( "button" )[ 0 ] )
     await user.click( screen.getByText( /play/iu ) )
-    await user.click( screen.getByAltText( /selected/iu ) )
-  }
-
-  test( "should display the coordinates clicked", async () => {
-    render( <Router/> )
-    const user = userEvent.setup()
-
-    await selectImage( user )
-
-    expect( screen.getByText( /clicked/iu ) )
+    expect( await screen.findByRole( "img" ) )
   } )
 
-  vi.mock( "../logic/getCharacters.ts", () => ( {
-    default: async () => image.characters,
-  } ) )
+  describe( "clicking the image", () => {
 
-  test( "should display the characters found", async () => {
-    render( <Router/> )
-    const user = userEvent.setup()
+    test( "should display the coordinates clicked", async () => {
+      render( <Router/> )
+      const user = userEvent.setup()
 
-    await selectImage( user )
+      await selectImage( user )
 
-    expect( screen.getByText( /odin/iu ) )
+      expect( screen.getByText( /clicked/iu ) )
+    } )
+
+    vi.mock( "../logic/getCharacters.ts", () => ( {
+      default: async () => image.characters,
+    } ) )
+
+    test( "should display the characters found", async () => {
+      render( <Router/> )
+      const user = userEvent.setup()
+
+      await selectImage( user )
+
+      expect( screen.getByText( /odin/iu ) )
+    } )
+
+    test( "should react on character click", async () => {
+      render( <Router/> )
+      const user = userEvent.setup()
+
+      await selectImage( user )
+
+      await user.click( screen.getByText( /odin/iu ) )
+
+      await waitFor(
+        () => expect( screen.getByText( /odin/iu ).textContent ).toContain(
+          "✔" )
+      )
+    } )
   } )
 
-  test( "should react on character click", async () => {
-    render( <Router/> )
-    const user = userEvent.setup()
+  const wait = ( ms: number ) => new Promise( resolve => setTimeout( resolve,
+                                                                     ms ) )
+  describe( "timer", () => {
+    test( "should be still when not on the game page",
+          async () => {
+            render( <Router/> )
 
-    await selectImage( user )
+            expect( screen.getByText( /00:00/u ) )
 
-    await user.click( screen.getByText( /odin/iu ) )
+            await wait( 1000 )
+            expect( screen.getByText( /00:00/u ) )
+          } )
 
-    await waitFor(
-      () => expect( screen.getByText( /odin/iu ).textContent ).toContain(
-        "✔" )
-    )
+    test( "should be still on the game page without an image", async () => {
+      render( <Router/> )
+      const user = userEvent.setup()
+
+      await user.click( screen.getByText( /play/iu ) )
+
+      expect( screen.getByText( /00:00/u ) )
+
+      await wait( 1000 )
+      expect( screen.getByText( /00:00/u ) )
+    } )
+
+    test( "should increment each second on the game page with an image",
+          async () => {
+            render( <Router additionalComponents={ <Timer/> }/> )
+            const user = userEvent.setup()
+
+            await selectImage( user )
+
+            expect( screen.getByText( /00:00/u ) )
+
+            await wait( 1000 )
+            expect( screen.getByText( /00:01/u ) )
+          } )
   } )
 } )
