@@ -1,23 +1,24 @@
 /* eslint-disable fp/no-unused-expression, fp/no-nil*/
-import { render, screen, waitFor }           from "@testing-library/react"
-import userEvent                             from "@testing-library/user-event"
+import { render, screen, waitFor }     from "@testing-library/react"
+import userEvent                       from "@testing-library/user-event"
 import {
   UserEvent,
-}                                            from "@testing-library/user-event/setup/setup"
-import { Link, MemoryRouter, Route, Routes } from "react-router-dom"
+}                                      from "@testing-library/user-event/setup/setup"
+import { MemoryRouter, Route, Routes } from "react-router-dom"
 
+import Nav                 from "../components/Nav"
 import Settings            from "../components/Settings"
 import Timer               from "../components/Timer"
 import { ContextProvider } from "../context/context"
 import Game                from "../routes/Game"
 
 const image = {
+  alt       : "waldo",
   characters: {
     odin : [ "30", "30" ],
     waldo: [ "15", "15" ],
   },
-  name      : "waldo",
-  url       : "https://i.imgur.com/9YQ9qX1.png",
+  src       : "https://i.imgur.com/9YQ9qX1.png",
 }
 
 const Profile = () => <Settings images={ [ image ] }/>
@@ -32,10 +33,8 @@ const Router = (
     ] }
   >
     <ContextProvider>
-      {/* <Nav/> */ }
+      <Nav/>
       { additionalComponents }
-      <div>MOTHERFUCKER</div>
-      <Link to="/odin-waldo/app">Play</Link>
       <Routes>
         <Route path="/odin-waldo/profile" element={ <Profile/> }/>
         <Route path="/odin-waldo/app" element={ <Game/> }/>
@@ -44,7 +43,7 @@ const Router = (
   </MemoryRouter>
 
 const selectImage = async ( user: UserEvent ): Promise<void> => {
-  await user.click( screen.getAllByRole( "button" )[ 0 ] )
+  await user.click( screen.getByTestId( "image-selection-button" ) )
   await user.click( screen.getByText( /play/iu ) )
   expect( await screen.findByRole( "img" ) )
   await user.click( screen.getByRole( "img" ) )
@@ -55,8 +54,9 @@ describe( "game process", () => {
     render( <Router/> )
     const user = userEvent.setup()
 
-    await user.click( screen.getAllByRole( "button" )[ 0 ] )
+    await user.click( screen.getByTestId( "image-selection-button" ) )
     await user.click( screen.getByText( /play/iu ) )
+
     expect( await screen.findByRole( "img" ) )
   } )
 
