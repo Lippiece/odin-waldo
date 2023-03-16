@@ -20,7 +20,6 @@ const Settings: FC<{ images: HTMLImageElement[] }> = ( { images } ) => {
             { payload: image.src, type: "set image" } )
 
           const characters = await getCharacters( image.src )
-          console.log( "characters", characters )
           dispatch( {
                       payload: characters,
                       type   : "set characters",

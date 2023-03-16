@@ -1,14 +1,13 @@
 /* eslint-disable fp/no-unused-expression, fp/no-nil*/
-import { render, screen, waitFor }     from "@testing-library/react"
-import userEvent                       from "@testing-library/user-event"
+import { act, render, screen, waitFor } from "@testing-library/react"
+import userEvent                        from "@testing-library/user-event"
 import {
   UserEvent,
-}                                      from "@testing-library/user-event/setup/setup"
-import { MemoryRouter, Route, Routes } from "react-router-dom"
+}                                       from "@testing-library/user-event/setup/setup"
+import { MemoryRouter, Route, Routes }  from "react-router-dom"
 
 import Nav                 from "../components/Nav"
 import Settings            from "../components/Settings"
-import Timer               from "../components/Timer"
 import { ContextProvider } from "../context/context"
 import Game                from "../routes/Game"
 
@@ -121,20 +120,20 @@ describe( "game process", () => {
       expect( screen.getByText( /00:00/u ) )
 
       await wait( 1000 )
+
       expect( screen.getByText( /00:00/u ) )
     } )
 
     test( "should increment each second on the game page with an image",
           async () => {
-            render( <Router additionalComponents={ <Timer/> }/> )
+            render( <Router/> )
             const user = userEvent.setup()
 
-            await selectImage( user )
+            await act( async () => {await selectImage( user )} )
 
             expect( screen.getByText( /00:00/u ) )
 
-            await wait( 1000 )
-            expect( screen.getByText( /00:01/u ) )
+            await waitFor( () => expect( screen.getByText( /00:01/u ) ) )
           } )
   } )
 } )

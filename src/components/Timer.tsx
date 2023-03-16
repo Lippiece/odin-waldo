@@ -1,17 +1,24 @@
 import { Text }                from "@blueprintjs/core"
 import { useEffect, useState } from "react"
+import { useLocation }         from "react-router-dom"
+
+import { useAppContext } from "../context/context"
 
 const Timer = () => {
-  const [ time, setTime ]           = useState( 0 )
-  const [ isRunning, setIsRunning ] = useState( false )
+  const location          = useLocation()
+  const context           = useAppContext()
+  const [ time, setTime ] = useState( 0 )
 
   useEffect( () => {
-    const msInASecond = 1000
-    const interval    = setInterval( () => {
+    const inGame        = location.pathname === "/odin-waldo/app"
+    const imageSelected = Boolean( context.image )
+    const isRunning     = inGame && imageSelected
+    const msInASecond   = 1000
+    const interval      = setInterval( () => {
       isRunning && setTime( time + 1 )
     }, msInASecond )
     return () => clearInterval( interval )
-  }, [ time, isRunning ] )
+  }, [ time, location.pathname, context.image ] )
 
   return <>
     <Text
