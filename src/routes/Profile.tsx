@@ -5,9 +5,8 @@ import { useAppContext } from "../context/context"
 
 const Stats = () => {
   const { user } = useAppContext()
-
   return <>
-    { user.length > 0 && <section>
+    { user && <section>
       <h2>Stats</h2>
     </section>
     }
@@ -17,16 +16,16 @@ const Stats = () => {
 type ImageAttributes = { name: string, url: string }[]
 
 const Profile = () => {
-  const imagesAttributes: ImageAttributes = useLoaderData()
-  const images                            = imagesAttributes.map( ( {
-                                                                      url,
-                                                                      name,
-                                                                    } ) => {
-                                                                    const image = new Image()
-                                                                    image.src   = url
-                                                                    image.alt   = name
-                                                                    return image
-                                                                  }
+  const imagesAttributes = useLoaderData() as ImageAttributes
+  const images           = imagesAttributes.map( ( {
+                                                     url,
+                                                     name,
+                                                   } ) => {
+                                                   const image = new Image()
+                                                   image.src   = url
+                                                   image.alt   = name
+                                                   return image
+                                                 }
   )
   return (
     <>

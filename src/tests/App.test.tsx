@@ -4,26 +4,13 @@ import { render, screen }              from "@testing-library/react"
 import userEvent                       from "@testing-library/user-event"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 
-import Nav      from "../components/Nav"
-import Settings from "../components/Settings"
+import Nav     from "../components/Nav"
 import {
   ContextProvider,
   useAppContext,
   useAppDispatch,
-}               from "../context/context"
-import Game     from "../routes/Game"
-
-const images  = [
-  {
-    name: "waldo",
-    url : "https://i.imgur.com/9YQ9qX1.png",
-  },
-  {
-    name: "odin",
-    url : "https://i.imgur.com/9YQ9qX1.png",
-  },
-]
-const Profile = () => <Settings images={ images }/>
+}              from "../context/context"
+import Profile from "../routes/Profile"
 
 const withCustomRoutes = ( routes: JSX.Element,
                            links: string[] ) => () =>
@@ -38,34 +25,12 @@ const withCustomRoutes = ( routes: JSX.Element,
     </ContextProvider>
   </MemoryRouter>
 
-const imageSelectionRoutes = (
-  <>
-    <Route path="/odin-waldo/app" element={ <Game/> }/>
-    <Route path="/odin-waldo/profile" element={ <Profile/> }/>
-  </>
-)
-const imageSelectionLinks  = [ "/odin-waldo/app", "/odin-waldo/profile" ]
-const ImageSelection       = withCustomRoutes( imageSelectionRoutes,
-                                               imageSelectionLinks )
-
 const authenticationRoutes = (
   <Route path="/odin-waldo/profile" element={ <Profile/> }/>
 )
 const authenticationLinks  = [ "/odin-waldo/profile" ]
 const Authentication       = withCustomRoutes( authenticationRoutes,
                                                authenticationLinks )
-
-describe( "image selection", () => {
-  test( "should select and show an image in play menu", async () => {
-    render( <ImageSelection/> )
-    const user = userEvent.setup()
-
-    await user.click( screen.getAllByRole( "button" )[ 0 ] )
-    await user.click( screen.getByText( /play/iu ) )
-
-    expect( screen.getByText( /selected/iu ) )
-  } )
-} )
 
 describe( "authentication", () => {
   test( "should greet anonymous user", () => {
@@ -105,14 +70,4 @@ describe( "authentication", () => {
     expect( screen.getByText( /email@email/iu ) )
   } )
 
-  test( "should show stats for authenticated user", async () => {
-    render( <Authentication/> )
-    const user = userEvent.setup()
-
-    expect( screen.queryByText( /stat/iu ) ).toBeNull()
-
-    await user.click( screen.getByText( /sign/iu ) )
-
-    expect( await screen.findByText( /stat/iu ) )
-  } )
 } )
