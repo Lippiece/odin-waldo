@@ -1,4 +1,4 @@
-# My Vite + React template with routers
-I mostly start from this when building my projects.
-It has a simple navbar implementation which is shown at every route, plus a home and two other pages.
-It has a deploy workflow that builds to production and deploys at GitHub Pages with every push.
+# My Odin Project's "Where's Waldo" implrementation
+You can select images from profile and then press "Play" to find the list of characters that's unique for every image. 
+
+The information about characters and their locations is stored in Firebase.
