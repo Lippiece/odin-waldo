@@ -4,7 +4,7 @@ import { Button }       from "@blueprintjs/core"
 import { useAtom }      from "jotai"
 import { FC, useState } from "react"
 
-import getCharacters    from "../logic/getCharacters"
+import getCharacters                 from "../logic/getCharacters"
 import { charactersAtom, imageAtom } from "../state/atoms"
 
 const Settings: FC<{ images: HTMLImageElement[] }> = ( { images } ) => {

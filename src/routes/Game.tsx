@@ -4,7 +4,7 @@ import { Menu, MenuItem } from "@blueprintjs/core"
 import { useAtom }        from "jotai"
 import { useState }       from "react"
 
-import isFound            from "../logic/isFound"
+import isFound                       from "../logic/isFound"
 import { charactersAtom, imageAtom } from "../state/atoms"
 
 type Point = [ number, number ]

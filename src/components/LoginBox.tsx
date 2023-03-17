@@ -24,7 +24,6 @@ const LoginBox = () => {
   const handleClose       = useCallback( () => setIsOpen( false ),
                                          [] )
 
-  const dispatch                             = useAppDispatch()
   const onSubmit: ( event ) => Promise<void> = async event => {
     event.preventDefault()
     setStatus( "Signing in" )
