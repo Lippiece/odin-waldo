@@ -23,7 +23,6 @@
     "sourceMap"                   : true,
     "alwaysStrict"                : true,
     "jsx"                         : "react-jsx",
-    //    "jsxImportSource"             : "signia-react-jsx",
     "watch"                       : true,
     "target"                      : "ESNext",
     "strictFunctionTypes"         : true,

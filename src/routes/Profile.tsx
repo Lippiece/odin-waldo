@@ -1,10 +1,11 @@
+import { useAtom }       from "jotai"
 import { useLoaderData } from "react-router-dom"
 
-import Settings          from "../components/Settings"
-import { useAppContext } from "../context/context"
+import Settings     from "../components/Settings"
+import { userAtom } from "../state/atoms"
 
 const Stats = () => {
-  const { user } = useAppContext()
+  const [ user ] = useAtom( userAtom )
   return <>
     { user && <section>
       <h2>Stats</h2>

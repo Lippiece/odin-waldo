@@ -5,20 +5,24 @@ import {
   InputGroup,
   Label,
 }                                from "@blueprintjs/core"
+import { useAtom }               from "jotai"
 import { useCallback, useState } from "react"
 
-import { useAppDispatch } from "../context/context"
-import signIn             from "../logic/signIn"
+import signIn       from "../logic/signIn"
+import { userAtom } from "../state/atoms"
 
 const LoginBox = () => {
+  const [ user, setUser ] = useAtom( userAtom )
+
   const [ username, setUsername ] = useState( "" )
   const [ password, setPassword ] = useState( "" )
   const [ status, setStatus ]     = useState( "" )
   const [ isOpen, setIsOpen ]     = useState( false )
-  const handleButtonClick         = useCallback( () => setIsOpen( !isOpen ),
-                                                 [] )
-  const handleClose               = useCallback( () => setIsOpen( false ),
-                                                 [] )
+
+  const handleButtonClick = useCallback( () => setIsOpen( !isOpen ),
+                                         [] )
+  const handleClose       = useCallback( () => setIsOpen( false ),
+                                         [] )
 
   const dispatch                             = useAppDispatch()
   const onSubmit: ( event ) => Promise<void> = async event => {
@@ -29,7 +33,7 @@ const LoginBox = () => {
       return setStatus( result.message )
     }
     setStatus( "Writing credentials" )
-    dispatch( { payload: result, type: "set user" } )
+    setUser( result )
     setStatus( "Signed in" )
   }
   const onInput: ( event ) => void           = event => {

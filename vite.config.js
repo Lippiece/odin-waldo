@@ -5,7 +5,7 @@
 
 import { resolve }            from "node:path"
 
-import react                  from "@vitejs/plugin-react"
+import react                  from "@vitejs/plugin-react-swc"
 import { defineConfig }       from "vite"
 import viteCompression        from "vite-plugin-compression"
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer"

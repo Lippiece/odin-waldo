@@ -9,6 +9,7 @@
     "preview"      : "vite build && vite preview",
     "test"         : "vitest",
     "test:watch"   : "vitest --watch",
+    "test:ui"      : "vitest --watch --ui",
     "test:coverage": "vitest --coverage"
   },
   "dependencies"   : {
@@ -17,8 +18,10 @@
     "@emotion/react"             : "latest",
     "@emotion/styled"            : "latest",
     "@testing-library/user-event": "latest",
+    "@vitejs/plugin-react-swc"   : "^3.2.0",
     "firebase"                   : "latest",
     "ghspa"                      : "latest",
+    "jotai"                      : "^2.0.3",
     "react"                      : "latest",
     "react-dom"                  : "latest",
     "react-router-dom"           : "latest",
@@ -26,16 +29,18 @@
     "vite-plugin-image-optimizer": "latest"
   },
   "devDependencies": {
-    "@testing-library/react" : "latest",
-    "@types/react"           : "latest",
-    "@types/react-dom"       : "latest",
-    "@vitejs/plugin-react"   : "latest",
-    "@vitest/coverage-c8"    : "latest",
-    "jsdom"                  : "latest",
-    "sass"                   : "latest",
-    "vite"                   : "latest",
-    "vite-plugin-compression": "latest",
-    "vitest"                 : "latest"
+    "@swc-jotai/react-refresh": "^0.0.7",
+    "@testing-library/react"  : "latest",
+    "@types/react"            : "latest",
+    "@types/react-dom"        : "latest",
+    "@vitejs/plugin-react"    : "latest",
+    "@vitest/coverage-c8"     : "latest",
+    "@vitest/ui"              : "^0.29.3",
+    "jsdom"                   : "latest",
+    "sass"                    : "latest",
+    "vite"                    : "latest",
+    "vite-plugin-compression" : "latest",
+    "vitest"                  : "latest"
   },
   "engineStrict"   : true,
   "engines"        : {

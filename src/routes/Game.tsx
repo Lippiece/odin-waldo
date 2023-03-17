@@ -1,22 +1,24 @@
 import "../css/Game.css"
 
 import { Menu, MenuItem } from "@blueprintjs/core"
+import { useAtom }        from "jotai"
 import { useState }       from "react"
 
-import { useAppContext } from "../context/context"
-import isFound           from "../logic/isFound"
+import isFound            from "../logic/isFound"
+import { charactersAtom, imageAtom } from "../state/atoms"
 
 type Point = [ number, number ]
 
 const Game = () => {
-  const context                                 = useAppContext()
+  const [ characters ]                          = useAtom( charactersAtom )
+  const [ image ]                               = useAtom( imageAtom )
   const [ isOpen, setIsOpen ]                   = useState( false )
   const [ coordinates, setCoordinates ]         = useState<Point>( [ 0, 0 ] )
   const [ foundCharacters, setFoundCharacters ] = useState<string[]>( [] )
   const joinedCoordinates                       = coordinates.join( ", " )
   const handleCharacterSelection                = ( character: string ) => {
     const radius: number           = 50
-    const actualCoordinates: Point = context.characters[ character ]
+    const actualCoordinates: Point = characters[ character ]
     isFound( coordinates, actualCoordinates, radius )
     && setFoundCharacters( [ ...foundCharacters, character ] )
   }
@@ -34,8 +36,8 @@ const Game = () => {
           icon="select"
           text={ `Clicked coordinates: ${ joinedCoordinates }` }
         />
-        { context?.characters &&
-          Object.keys( context.characters )?.map( ( character, index ) => (
+        { characters &&
+          Object.keys( characters )?.map( ( character, index ) => (
             <MenuItem
               intent={ foundCharacters.includes( character ) ?
                        "success" :
@@ -54,11 +56,11 @@ const Game = () => {
 
   return <>
     <h1>Hello from game</h1>
-    { context?.image
+    { image
       && <>
         <h2>Selected image:</h2>
         <img
-          src={ context.image }
+          src={ image }
           alt="Selected image from Profile"
           onClick={ event => {
             const rect                 = event.target.getBoundingClientRect()

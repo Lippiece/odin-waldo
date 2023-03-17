@@ -1,11 +1,12 @@
 import { Navbar }              from "@blueprintjs/core"
+import { useAtom }             from "jotai"
 import { useEffect, useState } from "react"
 
-import { useAppContext } from "../context/context"
-import LoginBox          from "./LoginBox"
+import { userAtom } from "../state/atoms"
+import LoginBox     from "./LoginBox"
 
 const UserBox = () => {
-  const { user }                  = useAppContext()
+  const [ user ]                  = useAtom( userAtom )
   const [ loggedIn, setLoggedIn ] = useState( false )
   useEffect( () => {
     user ? setLoggedIn( true ) : setLoggedIn( false )
