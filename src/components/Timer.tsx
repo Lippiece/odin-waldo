@@ -8,7 +8,7 @@ import { imageAtom } from "../state/atoms"
 const Timer = () => {
   const [ image ]         = useAtom( imageAtom )
   const location          = useLocation()
-  const [ time, setTime ] = useState( 0 )
+  const [ time, setTime ] = useAtom( timeAtom )
 
   useEffect( () => {
     const inGame        = location.pathname === "/odin-waldo/app"
