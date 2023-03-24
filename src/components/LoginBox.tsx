@@ -44,7 +44,7 @@ const LoginBox = () => {
     : setStatus( event.target.validationMessage )
   }
 
-  useEffect()( () => {
+  useEffect( () => {
     localStorage.setItem( "user", user )
   }, [ user ] )
 

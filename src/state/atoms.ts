@@ -1,7 +1,5 @@
 import { atom } from "jotai"
 
-import convertLinkToName from "../logic/convertLinkToName"
-
 interface Characters {
   [ key: string ]: [ number, number ]
 }
@@ -15,21 +13,19 @@ export const userAtom = atom( storageUser || "" )
 const storageImage     = localStorage.getItem( "image" )
 export const imageAtom = atom( storageImage || "" )
 
-const storageTime     = localStorage.getItem( "time" )
+const storageTime     = Number( localStorage.getItem( "time" ) )
 export const timeAtom = atom( storageTime || 0 )
 
 const storageCharacters     = ( localStorage.getItem( "characters" ) )
-export const charactersAtom = atom<Characters>(
+export const charactersAtom = atom(
   JSON.parse( storageCharacters ) || [] )
 
 const storageRecords     = localStorage.getItem( "records" )
-export const recordsAtom = atom<Records>(
-  JSON.parse( storageRecords ) || new Map() )
+export const recordsAtom = atom(
+  JSON.parse( storageRecords ) as Records || new Map() as Records )
 
-export const timestampsAtom = atom( get => {
-  const records             = get( recordsAtom )
-  const image               = get( imageAtom )
-  const thisImageTimestamps = records
-    .get( convertLinkToName( image ) )
-  return thisImageTimestamps || new Map()
-} )
+const storageTimestamps     = localStorage.getItem( "timestamps" )
+export const timestampsAtom = atom(
+  storageTimestamps ?
+  JSON.parse( storageTimestamps ) as Characters :
+  new Map() as Characters )

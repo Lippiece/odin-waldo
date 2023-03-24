@@ -19,7 +19,7 @@ const Settings: FC<{ images: HTMLImageElement[] }> = ( { images } ) => {
       localStorage.setItem( "characters", JSON.stringify( characters ) )
     }, [ characters ] )
     useEffect( (): void => {
-      localStorage.setItem( "image", JSON.stringify( _image ) )
+      localStorage.setItem( "image", _image )
     }, [ _image ] )
 
     return (

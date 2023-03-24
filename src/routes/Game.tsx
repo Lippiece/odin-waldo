@@ -4,23 +4,49 @@ import { Menu, MenuItem }      from "@blueprintjs/core"
 import { useAtom }             from "jotai"
 import { useEffect, useState } from "react"
 
-import isFound                       from "../logic/isFound"
-import { charactersAtom, imageAtom } from "../state/atoms"
+import convertLinkToName from "../logic/convertLinkToName"
+import isFound           from "../logic/isFound"
+import {
+  charactersAtom,
+  imageAtom,
+  recordsAtom,
+  timeAtom,
+  timestampsAtom,
+}                        from "../state/atoms"
 
 type Point = [ number, number ]
 
 const Game = () => {
-  const [ characters ]                          = useAtom( charactersAtom )
-  const [ image ]                               = useAtom( imageAtom )
+  const [ characters ]                = useAtom( charactersAtom )
+  const [ image ]                     = useAtom( imageAtom )
+  const [ records, setRecords ]       = useAtom( recordsAtom )
+  const [ timestamps, setTimestamps ] = useAtom( timestampsAtom )
+  const [ time ]                      = useAtom( timeAtom )
+
   const [ isOpen, setIsOpen ]                   = useState( false )
   const [ coordinates, setCoordinates ]         = useState<Point>( [ 0, 0 ] )
   const [ foundCharacters, setFoundCharacters ] = useState<string[]>( [] )
   const joinedCoordinates                       = coordinates.join( ", " )
-  const handleCharacterSelection                = ( character: string ) => {
-    const radius: number           = 50
+
+  const handleCharacterSelection = ( character: string ) => {
+    const handleFound = () => {
+      setFoundCharacters( [ ...foundCharacters, character ] )
+
+      const newTimestamps = timestamps.set( character, time )
+      setTimestamps( new Map( newTimestamps ) )
+    }
+
+    const calculatedRadius: number = ( coordinates[ 0 ] + coordinates[ 1 ] ) /
+                                     2 /
+                                     10
+    const radius: number           = calculatedRadius < 50
+                                     ? 50
+                                     : calculatedRadius
     const actualCoordinates: Point = characters[ character ]
-    isFound( coordinates, actualCoordinates, radius )
-    && setFoundCharacters( [ ...foundCharacters, character ] )
+
+    if ( isFound( coordinates, actualCoordinates, radius ) ) {
+      handleFound()
+    }
   }
 
   useEffect( ( () => {
@@ -29,6 +55,17 @@ const Game = () => {
   useEffect( ( () => {
     localStorage.setItem( "image", image )
   } ), [ image ] )
+  useEffect( ( () => {
+    localStorage.setItem( "timestamps", JSON.stringify( timestamps ) )
+    const newRecords = records.set( convertLinkToName( image ), timestamps )
+    setRecords( new Map( newRecords ) )
+  } ), [ timestamps ] )
+  useEffect( () => {
+    localStorage.setItem( "time", time )
+  } )
+  useEffect( () => {
+    localStorage.setItem( "records", JSON.stringify( records ) )
+  }, [ records ] )
 
   const Popup = () => (
     <>
@@ -48,7 +85,7 @@ const Game = () => {
             <MenuItem
               intent={ foundCharacters.includes( character ) ?
                        "success" :
-                       undefined }
+                       "none" }
               icon="person"
               key={ index }
               text={ foundCharacters.includes( character )
