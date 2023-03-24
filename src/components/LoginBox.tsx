@@ -4,9 +4,9 @@ import {
   DialogBody,
   InputGroup,
   Label,
-}                                from "@blueprintjs/core"
-import { useAtom }               from "jotai"
-import { useCallback, useState } from "react"
+}                                           from "@blueprintjs/core"
+import { useAtom }                          from "jotai"
+import { useCallback, useEffect, useState } from "react"
 
 import signIn       from "../logic/signIn"
 import { userAtom } from "../state/atoms"
@@ -43,6 +43,11 @@ const LoginBox = () => {
     ? setStatus( "" )
     : setStatus( event.target.validationMessage )
   }
+
+  useEffect( () => {
+    localStorage.setItem( "user", user )
+  }, [ user ] )
+
   return (
     <>
       <Button onClick={ handleButtonClick } text="Sign in"/>
