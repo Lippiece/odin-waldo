@@ -1,8 +1,8 @@
 import "../css/Game.css"
 
-import { Menu, MenuItem } from "@blueprintjs/core"
-import { useAtom }        from "jotai"
-import { useState }       from "react"
+import { Menu, MenuItem }      from "@blueprintjs/core"
+import { useAtom }             from "jotai"
+import { useEffect, useState } from "react"
 
 import isFound                       from "../logic/isFound"
 import { charactersAtom, imageAtom } from "../state/atoms"
@@ -22,6 +22,13 @@ const Game = () => {
     isFound( coordinates, actualCoordinates, radius )
     && setFoundCharacters( [ ...foundCharacters, character ] )
   }
+
+  useEffect( ( () => {
+    localStorage.setItem( "characters", JSON.stringify( characters ) )
+  } ), [ characters ] )
+  useEffect( ( () => {
+    localStorage.setItem( "image", image )
+  } ), [ image ] )
 
   const Popup = () => (
     <>
