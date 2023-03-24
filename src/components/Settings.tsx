@@ -10,9 +10,10 @@ import { charactersAtom, imageAtom } from "../state/atoms"
 const Settings: FC<{ images: HTMLImageElement[] }> = ( { images } ) => {
 
   const Image = ( { image } ) => {
-    const [ loaded, setLoaded ] = useState( false )
     const [ _, setImage ]       = useAtom( imageAtom )
     const [ __, setCharacters ] = useAtom( charactersAtom )
+
+    const [ loaded, setLoaded ] = useState( false )
     return (
       <Button
         onClick={ async () => {

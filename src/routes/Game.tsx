@@ -63,11 +63,15 @@ const Game = () => {
           src={ image }
           alt="Selected image from Profile"
           onClick={ event => {
-            const rect                 = event.target.getBoundingClientRect()
+            const rectangle            = event.target.getBoundingClientRect()
             const { clientX, clientY } = event
-            const imageX               = clientX - rect.x
-            const rawImageY            = clientY - rect.y
-            const imageY               = Number( rawImageY.toFixed( 0 ) )
+
+            const rawImageX = clientX - rectangle.x
+            const rawImageY = clientY - rectangle.y
+
+            const imageX = Number( rawImageX.toFixed( 0 ) )
+            const imageY = Number( rawImageY.toFixed( 0 ) )
+
             setIsOpen( !isOpen )
             setCoordinates( [ imageX, imageY ] )
           } }
