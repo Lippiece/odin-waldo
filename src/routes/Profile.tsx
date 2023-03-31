@@ -15,14 +15,14 @@ const Profile = () => {
                                                    image.src   = url
                                                    image.alt   = name
                                                    return image
-                                                 }
+                                                 },
   )
   return (
-    <>
-      <h1>Hello from Profile</h1>
-      <Stats/>
-      <Settings images={ images }/>
-    </>
+      <>
+        <h1>Hello from Profile</h1>
+        <Stats/>
+        <Settings images={ images }/>
+      </>
   )
 }
 

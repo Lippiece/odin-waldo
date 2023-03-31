@@ -16,16 +16,22 @@ export const imageAtom = atom( storageImage || "" )
 const storageTime     = Number( localStorage.getItem( "time" ) )
 export const timeAtom = atom( storageTime || 0 )
 
-const storageCharacters     = ( localStorage.getItem( "characters" ) )
-export const charactersAtom = atom(
-  JSON.parse( storageCharacters ) || [] )
+const storageCharacters      = ( localStorage.getItem( "characters" )
+)
+const characters: Characters = JSON.parse( storageCharacters ) || []
+export const charactersAtom  = atom(
+    characters )
 
-const storageRecords     = localStorage.getItem( "records" )
+const storageRecords       = localStorage.getItem( "records" )
+const storageRecordsParsed = storageRecords && JSON.parse( storageRecords )
+console.log( "storageRecordsParsed", storageRecordsParsed )
+const records: Records   = new Map( storageRecordsParsed )
 export const recordsAtom = atom(
-  JSON.parse( storageRecords ) as Records || new Map() as Records )
+    records )
 
-const storageTimestamps     = localStorage.getItem( "timestamps" )
-export const timestampsAtom = atom(
-  storageTimestamps ?
-  JSON.parse( storageTimestamps ) as Characters :
-  new Map() as Characters )
+const storageTimestamps      = localStorage.getItem( "timestamps" )
+const timestampsParsed       = storageTimestamps && JSON.parse(
+    storageTimestamps )
+const timestamps: Timestamps = new Map( timestampsParsed )
+export const timestampsAtom  = atom(
+    timestamps )

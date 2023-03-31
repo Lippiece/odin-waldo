@@ -8,7 +8,7 @@ const getCharacters = async ( image: string ) => {
   const documentReference = doc( database, `/images/${ imageName }` )
   try {
     const documentSnapshot = await getDoc(
-      documentReference )
+        documentReference )
     const data             = documentSnapshot.data()
     return data || []
   } catch ( error ) {

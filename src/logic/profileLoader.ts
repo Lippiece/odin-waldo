@@ -6,12 +6,12 @@ const getImagesFromStorage = async () => {
     const listReference = ref( storage, "images" )
     const listResult    = await listAll( listReference )
     return await Promise.all(
-      listResult.items.map( async item => {
-        const { name, fullPath } = item
-        const url                = await getDownloadURL(
-          ref( storage, fullPath ) )
-        return { name, url }
-      } ) )
+        listResult.items.map( async item => {
+          const { name, fullPath } = item
+          const url                = await getDownloadURL(
+              ref( storage, fullPath ) )
+          return { name, url }
+        } ) )
   } catch ( error ) {
     console.error( error )
     return []

@@ -20,9 +20,11 @@ const LoginBox = () => {
   const [ isOpen, setIsOpen ]     = useState( false )
 
   const handleButtonClick = useCallback( () => setIsOpen( !isOpen ),
-                                         [] )
+                                         [],
+  )
   const handleClose       = useCallback( () => setIsOpen( false ),
-                                         [] )
+                                         [],
+  )
 
   const onSubmit: ( event ) => Promise<void> = async event => {
     event.preventDefault()
@@ -49,36 +51,36 @@ const LoginBox = () => {
   }, [ user ] )
 
   return (
-    <>
-      <Button onClick={ handleButtonClick } text="Sign in"/>
-      <Dialog isOpen={ isOpen } onClose={ handleClose }>
-        <DialogBody>
-          <form
-            onSubmit={ onSubmit }
-          >
-            <p>{ status }</p>
-            <Label htmlFor="mailInput">E-Mail</Label>
-            <InputGroup
-              id="mailInput"
-              onInput={ onInput }
-              pattern="[^@]+@[^@]+\.[^@]+"
-              minLength={ 10 }
-              required
-              placeholder="mail@domain.com"
-            />
-            <Label htmlFor="passwordInput">Password</Label>
-            <InputGroup
-              id="passwordInput"
-              onInput={ onInput }
-              type="password"
-              minLength={ 6 }
-              required
-            />
-            <Button type="submit">Login</Button>
-          </form>
-        </DialogBody>
-      </Dialog>
-    </>
+      <>
+        <Button onClick={ handleButtonClick } text="Sign in"/>
+        <Dialog isOpen={ isOpen } onClose={ handleClose }>
+          <DialogBody>
+            <form
+                onSubmit={ onSubmit }
+            >
+              <p>{ status }</p>
+              <Label htmlFor="mailInput">E-Mail</Label>
+              <InputGroup
+                  id="mailInput"
+                  onInput={ onInput }
+                  pattern="[^@]+@[^@]+\.[^@]+"
+                  minLength={ 10 }
+                  required
+                  placeholder="mail@domain.com"
+              />
+              <Label htmlFor="passwordInput">Password</Label>
+              <InputGroup
+                  id="passwordInput"
+                  onInput={ onInput }
+                  type="password"
+                  minLength={ 6 }
+                  required
+              />
+              <Button type="submit">Login</Button>
+            </form>
+          </DialogBody>
+        </Dialog>
+      </>
   )
 }
 

@@ -1,11 +1,10 @@
 // eslint-disable sort-keys-fix/sort-keys-fix
-import "./css/App.scss"
-
 import { initializeApp } from "firebase/app"
 import { Outlet }        from "react-router-dom"
 
 import Footer from "./components/Footer"
 import Nav    from "./components/Nav"
+import "./css/App.scss"
 
 const app       = initializeApp( {
                                    apiKey           : "AIzaSyAdFVzk7tS8rsCqVX9rxUBgLjlejMNsoRo",
@@ -18,12 +17,12 @@ const app       = initializeApp( {
 window.firebase = app
 const App       = () => {
   return ( <>
-      <Nav/>
-      <main>
-        <Outlet/>
-      </main>
-      <Footer/>
-    </>
+        <Nav/>
+        <main>
+          <Outlet/>
+        </main>
+        <Footer/>
+      </>
   )
 }
 

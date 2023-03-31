@@ -30,53 +30,56 @@ const Settings: FC<{ images: HTMLImageElement[] }> = ( { images } ) => {
     const [ _, setImage ]       = useAtom( imageAtom )
     const [ __, setCharacters ] = useAtom( charactersAtom )
     return (
-      <Button
-        onClick={ async () => {
-          setImage( image.src )
+        <Button
+            onClick={ async () => {
+              setImage( image.src )
 
-          const characters = await getCharacters( image.src )
-          setCharacters( characters )
-        } }
+              const characters = await getCharacters( image.src )
+              setCharacters( characters )
+            } }
 
-        intent={ image === image.src ? "primary" : "none" }
-        data-testid="image-selection-button"
-      >
-        <img
-          alt={ image.alt }
-          src={ image.src }
-          loading="lazy"
-          onLoad={ () => setLoaded( true ) }
+            intent={ image === image.src ? "primary" : "none" }
+            data-testid="image-selection-button"
+        >
+          <img
+              alt={ image.alt }
+              src={ image.src }
+              loading="lazy"
+              onLoad={ () => setLoaded( true ) }
 
-          //          className={ loaded ? "" : "bp4-skeleton" }
-        />
-      </Button>
+              //          className={ loaded ? "" : "bp4-skeleton" }
+          />
+        </Button>
     )
   }
   return <section className="image-pool">
     <h1>Choose your destiny</h1>
     { images?.map( imageProperties => (
-      <Image image={ imageProperties } key={ imageProperties.alt }/> ) ) }
+        <Image image={ imageProperties } key={ imageProperties.alt }/>
+    ) ) }
   </section>
 }
 
 const Profile = () => <Settings images={ [ image ] }/>
 
 const Router = (
-  { additionalComponents = null }: { additionalComponents?: JSX.Element } = {}
+    { additionalComponents = null }: {
+      additionalComponents?: JSX.Element
+    } = {},
 ) =>
-  <MemoryRouter
-    initialEntries={ [
-      "/odin-waldo/app",
-      "/odin-waldo/profile",
-    ] }
-  >
-    <Nav/>
-    { additionalComponents }
-    <Routes>
-      <Route path="/odin-waldo/profile" element={ <Profile/> }/>
-      <Route path="/odin-waldo/app" element={ <Game/> }/>
-    </Routes>
-  </MemoryRouter>
+    <MemoryRouter
+        initialEntries={ [
+          "/odin-waldo/app",
+          "/odin-waldo/profile",
+        ] }
+    >
+      <Nav/>
+      { additionalComponents }
+      <Routes>
+        <Route path="/odin-waldo/profile" element={ <Profile/> }/>
+        <Route path="/odin-waldo/app" element={ <Game/> }/>
+      </Routes>
+    </MemoryRouter>
 
 const selectImage = async ( user: UserEvent ): Promise<void> => {
   await user.click( screen.getByTestId( "image-selection-button" ) )
@@ -108,8 +111,9 @@ describe( "game process", () => {
     } )
 
     vi.mock( "../logic/getCharacters.ts", () => ( {
-      default: async () => image.characters,
-    } ) )
+          default: async () => image.characters,
+        }
+    ) )
 
     test( "should display the characters found", async () => {
       render( <Router/> )
@@ -129,14 +133,15 @@ describe( "game process", () => {
       await user.click( screen.getByText( /odin/iu ) )
 
       await waitFor(
-        () => expect( screen.getByText( /odin/iu ).textContent ).toContain(
-          "✔" )
+          () => expect( screen.getByText( /odin/iu ).textContent ).toContain(
+              "✔" ),
       )
     } )
   } )
 
   const wait = ( ms: number ) => new Promise( resolve => setTimeout( resolve,
-                                                                     ms ) )
+                                                                     ms,
+  ) )
   describe( "timer", () => {
     test( "should be still when not on the game page",
           async () => {
@@ -146,7 +151,8 @@ describe( "game process", () => {
 
             await wait( 1000 )
             expect( screen.getByText( /00:00/u ) )
-          } )
+          },
+    )
 
     test( "should be still on the game page without an image", async () => {
       render( <Router/> )
@@ -171,6 +177,7 @@ describe( "game process", () => {
             expect( screen.getByText( /00:00/u ) )
 
             await waitFor( () => expect( screen.getByText( /00:01/u ) ) )
-          } )
+          },
+    )
   } )
 } )

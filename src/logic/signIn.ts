@@ -1,17 +1,24 @@
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth"
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth"
 
-const signIn = async (email: string, password: string) => {
-  const auth = getAuth(window.firebase)
+const signIn = async ( email: string, password: string ) => {
+  const auth = getAuth( window.firebase )
 
   try {
-    const login = await signInWithEmailAndPassword(auth, email, password)
+    const login = await signInWithEmailAndPassword( auth, email, password )
     return auth.currentUser.email
-  } catch (error) {
-    if (error.code === "auth/user-not-found") {
+  } catch ( error ) {
+    if ( error.code === "auth/user-not-found" ) {
       try {
-        const {user} = await createUserWithEmailAndPassword(auth, email, password)
+        const { user } = await createUserWithEmailAndPassword( auth,
+                                                               email,
+                                                               password,
+        )
         return auth.currentUser.email
-      } catch (registerError) {
+      } catch ( registerError ) {
         return registerError
       }
     } else {

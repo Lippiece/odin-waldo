@@ -22,8 +22,8 @@ const Timer = () => {
   }, [ time, location.pathname, image ] )
 
   return <Text
-    title="Timer"
-    tagName="h2"
+      title="Timer"
+      tagName="h2"
   >{ formatTime( time ) }</Text>
 }
 

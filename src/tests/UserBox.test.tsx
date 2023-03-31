@@ -14,23 +14,24 @@ describe( "authentication", () => {
   } )
 
   vi.mock( "../components/UserBox.tsx", () => ( {
-    default: () => {
-      const [ user, setUser ] = useAtom( userAtom )
-      const userOrAnonymous   = user || "Anonymous"
+        default: () => {
+          const [ user, setUser ] = useAtom( userAtom )
+          const userOrAnonymous   = user || "Anonymous"
 
-      return <section>
-        <p>{ `Hi, ${ userOrAnonymous }` }</p>
-        { !user && <form
-          onSubmit={ event => {
-            event.preventDefault()
-            setUser( "email@email.email" )
-          } }
-        >
-          <button type="submit">Sign in</button>
-        </form> }
-      </section>
-    },
-  } ) )
+          return <section>
+            <p>{ `Hi, ${ userOrAnonymous }` }</p>
+            { !user && <form
+              onSubmit={ event => {
+                event.preventDefault()
+                setUser( "email@email.email" )
+              } }
+            >
+              <button type="submit">Sign in</button>
+            </form> }
+          </section>
+        },
+      }
+  ) )
 
   test( "should greet authenticated user", async () => {
     render( <UserBox/> )

@@ -9,10 +9,10 @@ const Stats = () => {
   const [ records ] = useAtom( recordsAtom )
 
   useEffect( () => {
-    localStorage.setItem( "records", JSON.stringify( records ) )
+    localStorage.setItem( "records", JSON.stringify( Array.from( records ) ) )
   }, [ records ] )
   useEffect( () => {
-    localStorage.setItem( "user", JSON.stringify( user ) )
+    localStorage.setItem( "user", user )
   }, [ user ] )
 
   return <section className="stats">
@@ -21,12 +21,12 @@ const Stats = () => {
         <Text tagName="h1">Records</Text>
         { records.size > 0
           ? [ ...records.entries() ]
-            .map( ( [ image, timestamps ] ) => <ImageData
-                    image={ image }
-                    timestamps={ timestamps }
-                    key={ image }
-                  />
-            )
+              .map( ( [ image, timestamps ] ) => <ImageData
+                        image={ image }
+                        timestamps={ timestamps }
+                        key={ image }
+                    />,
+              )
           : <Text tagName="p">Nothing yet!</Text>
         }
         { !user
@@ -40,18 +40,19 @@ const ImageData = ( { image, timestamps }: {
   image: string,
   timestamps: Map<string, number>,
 } ) => {
-  console.log( "image", image )
-  return <section>
-    <Text>{ `Records for ${ image }` }</Text>
-    <ul className="bp4-list">
-      { [ ...timestamps.entries() ]
-        .map( ( [ character, time ] ) =>
-                <li key={ character }>
-                  <Text>Found { character } at { time }</Text>
-                </li>
-        ) }
-    </ul>
-  </section>
+  return <>{
+      image && <section>
+              <Text>{ `Records for ${ image }` }</Text>
+              <ul className="bp4-list">
+                { [ ...timestamps.entries() ]
+                    .map( ( [ character, time ] ) =>
+                              <li key={ character }>
+                                <Text>Found { character } at { time }</Text>
+                              </li>,
+                    ) }
+              </ul>
+            </section> }
+  </>
 }
 
 export default Stats

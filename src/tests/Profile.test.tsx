@@ -32,23 +32,24 @@ const Router = () => {
 }
 
 vi.mock( "../components/UserBox.tsx", () => ( {
-  default: () => {
-    const [ user, setUser ] = useAtom( userAtom )
-    const userOrAnonymous   = user || "Anonymous"
+      default: () => {
+        const [ user, setUser ] = useAtom( userAtom )
+        const userOrAnonymous   = user || "Anonymous"
 
-    return <section>
-      <p>{ `Hi, ${ userOrAnonymous }` }</p>
-      { !user && <form
-        onSubmit={ event => {
-          event.preventDefault()
-          setUser( "email@email.email" )
-        } }
-      >
-        <button type="submit">Sign in</button>
-      </form> }
-    </section>
-  },
-} ) )
+        return <section>
+          <p>{ `Hi, ${ userOrAnonymous }` }</p>
+          { !user && <form
+            onSubmit={ event => {
+              event.preventDefault()
+              setUser( "email@email.email" )
+            } }
+          >
+            <button type="submit">Sign in</button>
+          </form> }
+        </section>
+      },
+    }
+) )
 
 describe( "records", () => {
   test( "should show records after all characters are selected",
@@ -69,8 +70,10 @@ describe( "records", () => {
           expect( screen.getByText( /found odin/iu ) )
           expect( screen.getByText( /average/iu ) )
           expect( screen.getByText( /other/iu ) )
-        } )
+        },
+  )
 
   test.skip( "should show other's records after all characters are selected",
-             async () => {} )
+             async () => {},
+  )
 } )

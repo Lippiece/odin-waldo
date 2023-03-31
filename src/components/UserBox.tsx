@@ -13,7 +13,7 @@ const UserBox = () => {
     user ? setLoggedIn( true ) : setLoggedIn( false )
   }, [ user ] )
   useEffect( () => {
-    localStorage.setItem( "user", user )
+    user && localStorage.setItem( "user", JSON.stringify( user ) )
   }, [ user ] )
 
   return <>
