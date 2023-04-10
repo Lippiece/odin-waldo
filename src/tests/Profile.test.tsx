@@ -15,12 +15,19 @@ const characters = {
   odin: [ 1, 1 ],
 }
 
+vi.mock( "../logic/convertLinkToName.ts", () => ( {
+      default: () => "removed",
+    }
+) )
+
 const Router = () => {
   const [ , setImage ]      = useAtom( imageAtom )
   const [ , setCharacters ] = useAtom( charactersAtom )
+  const [ , setUser ]       = useAtom( userAtom )
   useEffect( () => {
     setImage( image )
     setCharacters( characters )
+    setUser( "user@email.email" )
   }, [] )
   return <MemoryRouter initialEntries={ [ "/odin-waldo/app" ] }>
     <Nav/>
@@ -31,33 +38,32 @@ const Router = () => {
   </MemoryRouter>
 }
 
-vi.mock( "../components/UserBox.tsx", () => ( {
-      default: () => {
-        const [ user, setUser ] = useAtom( userAtom )
-        const userOrAnonymous   = user || "Anonymous"
+// vi.mock( "../components/UserBox.tsx", () => ( {
+//       default: () => {
+//         const [ user, setUser ] = useAtom( userAtom )
+//         const userOrAnonymous   = user || "Anonymous"
+//
+//         return <section>
+//           <p>{ `Hi, ${ userOrAnonymous }` }</p>
+//           { !user && <form
+//             onSubmit={ event => {
+//               event.preventDefault()
+//               setUser( "email@email.email" )
+//             } }
+//           >
+//             <button type="submit">Sign in</button>
+//           </form> }
+//         </section>
+//       },
+//     }
+// ) )
 
-        return <section>
-          <p>{ `Hi, ${ userOrAnonymous }` }</p>
-          { !user && <form
-            onSubmit={ event => {
-              event.preventDefault()
-              setUser( "email@email.email" )
-            } }
-          >
-            <button type="submit">Sign in</button>
-          </form> }
-        </section>
-      },
-    }
-) )
-
-describe( "records", () => {
+describe.concurrent( "records", () => {
   test( "should show records after all characters are selected",
         async () => {
           render( <Router/> )
           const user = userEvent.setup()
 
-          await user.click( screen.getByText( /sign/iu ) )
           expect( screen.getByText( /email/iu ) )
 
           await user.click( screen.getByRole( "img" ) )
